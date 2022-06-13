@@ -1,4 +1,5 @@
 const { promise, reject } = require('bcrypt/promises');
+const { response } = require('express');
 const async = require('hbs/lib/async');
 var db = require('../config/connection')
 var collection = require('../config/users')
@@ -351,6 +352,40 @@ module.exports = {
             console.log(total[0].total);
             
             resolve(total[0].total)
+        })
+    },
+    placeOrder:(order,products,total)=>{
+        return new Promise((resolve,reject)=>{
+            console.log(order,products,total);
+            let status=order.paymentmethod==='COD'?'Placed':'pending'
+            let orderObj={
+                deliveryDetails:{
+                    Name:order.Name,
+                    Address:order.Place,
+                    Street:order.Street,
+                    City:order.City,
+                    Pincode:order.Pincode,
+                    Mobile:order.Mobile,
+                    Email:order.Email,
+                },
+                userId:objectId(order.userId),
+                PaymentMethod:order.paymentmethod,
+                products:products,
+                status:status
+            }
+
+            db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response)=>{
+                resolve()
+            })
+
+        })
+
+    },
+    getCartProductList:(userId)=>{
+        return new Promise(async(resolve,reject)=>{
+            let cart=await db.get().collection(collection.CART_COLLECTION).findOne({user:objectId(userId)})
+            console.log(cart);
+            resolve(cart.products)
         })
     }
 }

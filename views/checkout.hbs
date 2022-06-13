@@ -17,7 +17,7 @@
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-xl-10 ftco-animate">
-				<form action="#" class="billing-form">
+				<form   id="checkout-form" class="checkout-form">
 					<p><a href="#" class="btn btn-primary py-3 px-4 mr-4">Add New Address </a></p>
 					<h3 class="mb-4 billing-heading">Billing Details</h3>
 					<div class="row align-items-end">
@@ -33,21 +33,10 @@
 								<input type="text" id="Last_Name" name="Last name"  class="form-control" placeholder="">
 							</div>
 						</div>
-						<div class="w-100"></div>
-						<div class="col-md-12">
+					<div class="col-md-6">
 							<div class="form-group">
-								<label for="country">District</label>
-								<div class="select-wrap">
-									<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-									<select name="Place" id="Place" class="form-control">
-										<option value="">Thiruvandhapuram</option>
-										<option value="">Kollam</option>
-										<option value="">Nedumangadu</option>
-										<option value="">Aryandu</option>
-										<option value="">Perurkada</option>
-										<option value="">Kolavikonam</option>
-									</select>
-								</div>
+								<label for="lastname">Place</label>
+								<input type="text" id="Place" name="Place"  class="form-control" placeholder="">
 							</div>
 						</div>
 						<div class="w-100"></div>
@@ -81,6 +70,7 @@
 							<div class="form-group">
 								<label for="phone">Phone</label>
 								<input type="text" id="Mobile" name="Mobile" class="form-control" placeholder="">
+								<input type="text" name="userId" id="" value="{{user._id}}" hidden>
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -99,7 +89,7 @@
 							</div>
 						</div>
 					</div>
-				</form><!-- END -->
+				
 
 
 
@@ -129,21 +119,21 @@
 							<div class="form-group">
 								<div class="col-md-12">
 									<div class="radio">
-										<label><input type="radio" name="Payment-Method" value="COD" class="mr-2">COD</label>
+										<label><input type="radio" name="paymentmethod" value="COD" class="mr-2">COD</label>
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-md-12">
 									<div class="radio">
-										<label><input type="radio" name="Payment-Method"  value="Online Pyament" class="mr-2">Card</label>
+										<label><input type="radio" name="paymentmethod"  value="Online Pyament" class="mr-2">Card</label>
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-md-12">
 									<div class="radio">
-										<label><input type="radio" name="Payment-Method" value="Gpay" class="mr-2"> Gpay</label>
+										<label><input type="radio" name="paymentmethod" value="Gpay" class="mr-2"> Gpay</label>
 									</div>
 								</div>
 							</div>
@@ -155,11 +145,28 @@
 									</div>
 								</div>
 							</div>
-							<p><a href="#" class="btn btn-primary py-3 px-4">Place an order</a></p>
+							<button type="submit" class="btn btn-success" onclick="return validation()">PLACE ORDER</button>
 						</div>
 					</div>
 				</div>
 			</div> <!-- .col-md-8 -->
 		</div>
 	</div>
+	</form><!-- END -->
 </section>
+<script>
+	$("#checkout-form").submit((e)=>{
+		e.preventDefault()
+		$.ajax({
+			url:"/checkout",
+			method:'post',
+			data:$('#checkout-form').serialize(),
+			success:(response)=>{
+				alert("working")
+			}
+
+
+		})
+	})
+
+</script>

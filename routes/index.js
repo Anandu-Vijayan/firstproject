@@ -7,6 +7,7 @@ var config=require('../config/otp')
 var productHelper = require('../helpers/product-helpers')
 const userHelpers = require('../helpers/user-helpers');
 const async = require('hbs/lib/async');
+const { response } = require('express');
 const client = require("twilio")(config.accountSID, config.authToken);
 
 const verifylogin = (req, res, next) => {
@@ -221,12 +222,28 @@ router.post("/remove-from-cart",(req,res)=>{
     console.log("workingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
   })
 })
-router.get('/checkout',verifylogin,async (req, res) => {
+router.get('/checkout',verifylogin,async (req, res) => { 
   let loged = req.session.user
   let total=await productHelpers.getTotalAmount(req.session.user._id)
   let GrandTotal=total+120
-  res.render('checkout', { user: true, loged ,total,GrandTotal})
+  res.render('checkout', { user: true, loged ,total,GrandTotal,user:req.session.user})
 })
+router.post('/checkout',async(req,res)=>{
+  let products=await productHelpers.getCartProductList(req.body.userId)
+  let GrandTotal=await productHelpers.getTotalAmount(req.body.userId)
+  let total=GrandTotal+120
+  productHelpers.placeOrder(req.body,products,total).then((response)=>{
+    res.json({status:true})
+  
+  })
+  console.log(req.body);
+
+  
+ 
+})
+
+
+
 router.get('/blog', (req, res) => {
   let loged = req.session.user
   res.render('blog', { user: true, loged })
