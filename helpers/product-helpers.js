@@ -393,5 +393,14 @@ module.exports = {
             console.log(cart);
             resolve(cart.products)
         })
+    },
+    getOrdersList:(userId)=>{
+        return new Promise(async(resolve,reject)=>{
+            console.log(userId);
+            let orders=await db.get().collection(collection.ORDER_COLLECTION).find({user:objectId(userId)}).toArray()
+            
+            console.log(orders);
+            resolve(orders)
+        })
     }
 }

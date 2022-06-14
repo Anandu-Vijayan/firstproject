@@ -75,7 +75,7 @@
 					<h3>Cart Totals</h3>
 					<p class="d-flex">
 						<span>Subtotal</span>
-						<span id="total1">{{totalValue}}</span>
+						<span id="total1">{{totalValue}}/-</span>
 					</p>
 					<p class="d-flex">
 						<span>Delivery</span>
@@ -85,12 +85,12 @@
 					<hr>
 					<p class="d-flex total-price">
 						<span>Total</span>
-						<span id="total">Rs.{{GrandTotal}}</span>
+						<h6>Rs.<span id="total">{{GrandTotal}}/-</span></h6></span>
 					</p>
 				</div>
 				<p class="text-center"><a href="checkout" class="btn btn-primary py-3 px-4">Proceed to Checkout</a>
 				</p>
-			</div>
+			</div>	
 		</div>
 	</div>
 </section>
@@ -119,7 +119,7 @@ $.ajax({
 			console.log(response)
             document.getElementById(productId).innerHTML=quantity+count
 			document.getElementById('total1').innerHTML=response.total
-			document.getElementById('total').innerHTML=response.total
+			document.getElementById('total').innerHTML=response.GrandTotal
         }
 
     }

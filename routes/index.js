@@ -8,6 +8,8 @@ var productHelper = require('../helpers/product-helpers')
 const userHelpers = require('../helpers/user-helpers');
 const async = require('hbs/lib/async');
 const { response } = require('express');
+const { validateExpressRequest } = require('twilio/lib/webhooks/webhooks');
+const { redirect } = require('express/lib/response');
 const client = require("twilio")(config.accountSID, config.authToken);
 
 const verifylogin = (req, res, next) => {
@@ -162,7 +164,7 @@ router.post('/otp',(req,res)=>{
 
 
 
-router.get('/product', (req, res, next) => {
+router.get('/product',verifylogin, (req, res, next) => {
   let loged = req.session.user
   productHelpers.getAllProducts().then((product) => {
     res.render('product', { user: true, loged, product })
@@ -178,7 +180,7 @@ router.get('/cart',verifylogin,async (req, res) => {
   res.render('cart',{ user: true, loged,user:req.session.user,products,GrandTotal,totalValue})
   
 })
- router.get('/add-to-cart/:id',(req,res)=>{
+ router.get('/add-to-cart/:id',verifylogin,(req,res)=>{
    
   if(req.session.user){
    
@@ -199,15 +201,16 @@ router.get('/cart',verifylogin,async (req, res) => {
   console.log("helooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
    productHelpers.changeProductQuantity(req.body).then(async(response)=>{
     response.total=await productHelpers.getTotalAmount(req.body.user)
+    response.GrandTotal=response.total+120
     res.json(response) 
  console.log(req.body);
    }) 
  })
-router.get('/about', (req, res) => { 
+router.get('/about',verifylogin, (req, res) => { 
   let loged = req.session.user
   res.render('about', { user: true, loged })
 })
-router.get('/product-single/:id', (req, res) => {
+router.get('/product-single/:id',verifylogin, (req, res) => {
   let loged = req.session.user
   productHelpers.getSingleProduct(req.params.id).then((product)=>{
     res.render('product-single', { user: true, loged,product})
@@ -220,7 +223,7 @@ router.post("/remove-from-cart",(req,res)=>{
   productHelpers.removeFromCart(req.body).then((response)=>{
     res.json(response)
     console.log("workingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
-  })
+  }) 
 })
 router.get('/checkout',verifylogin,async (req, res) => { 
   let loged = req.session.user
@@ -241,18 +244,34 @@ router.post('/checkout',async(req,res)=>{
   
  
 })
-
-
-
-router.get('/blog', (req, res) => {
+router.get ('/order-success',verifylogin,(req,res)=>{
   let loged = req.session.user
-  res.render('blog', { user: true, loged })
+  
+  res.render('order-success',{user:true,loged})
+  
+    // res.redirect('/login')
+  
+  
 })
-router.get('/blog-single', (req, res) => {
+
+router.get ('/orders',verifylogin,async(req,res)=>{
   let loged = req.session.user
-  res.render('blog-single', { user: true, loged })
+  let orders=await productHelpers.getOrdersList(req.body.user).then(response)
+  
+  res.render('orders',{user:true,loged,orders})
+  
+    // res.redirect('/login')
+  
+  
 })
-router.get('/contact', (req, res) => {
+
+
+
+router.get('/User',verifylogin, (req, res) => {
+  let loged = req.session.user
+  res.render('User', { user: true, loged })
+})
+router.get('/contact',verifylogin, (req, res) => {
   let loged = req.session.user
   res.render('contact', { user: true, loged })
 })
