@@ -372,11 +372,15 @@ module.exports = {
                     Pincode:order.Pincode,
                     Mobile:order.Mobile,
                     Email:order.Email,
+                    
+                    Date:order.Date
                 },
                 userId:objectId(order.userId),
                 PaymentMethod:order.paymentmethod,
                 products:products,
-                status:status
+                Amount:total,
+                status:status,
+                
             }
 
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response)=>{
@@ -394,13 +398,47 @@ module.exports = {
             resolve(cart.products)
         })
     },
-    getOrdersList:(userId)=>{
-        return new Promise(async(resolve,reject)=>{
-            console.log(userId);
-            let orders=await db.get().collection(collection.ORDER_COLLECTION).find({user:objectId(userId)}).toArray()
-            
-            console.log(orders);
-            resolve(orders)
-        })
-    }
+    getUserOrders:(userId)=>{
+    return new Promise(async(resolve,reject)=>{
+        console.log(userId);
+        let orders=await db.get().collection(collection.ORDER_COLLECTION).find({userId:objectId(userId)}).toArray()
+        console.log(orders);
+        resolve(orders)
+    })
+  },
+  getOrderProducts:(orderId)=>{
+    return new Promise (async(resolve,reject)=>{
+        let orderItems=await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+            {
+                $match:{_id:objectId(orderId)}
+            },
+            {
+                $unwind:'$products'
+            },
+            {
+                $project:{
+                    item:'$products.item',
+                    quantity:'$products.quantity'
+                }
+            },
+            {
+                $lookup:{
+                    from:collection.PRODUCT_COLLECTION,
+                    localField:'item',
+                    foreignField:'_id',
+                    as:'product'
+                }
+            },
+            {
+                $project:{
+                    item:1,quantity:1,product:{$arrayElemAt:['$product',0]}
+                }
+            }
+
+        ]).toArray()
+        console.log(orderItems);
+        resolve(orderItems)
+
+    })
+  }
 }

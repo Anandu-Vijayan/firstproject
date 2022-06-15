@@ -256,13 +256,18 @@ router.get ('/order-success',verifylogin,(req,res)=>{
 
 router.get ('/orders',verifylogin,async(req,res)=>{
   let loged = req.session.user
-  let orders=await productHelpers.getOrdersList(req.body.user).then(response)
+  let orders=await productHelpers.getUserOrders(req.session.user._id)
   
-  res.render('orders',{user:true,loged,orders})
+  res.render('orders',{user:req.session.user,user:true,loged,orders})
   
     // res.redirect('/login')
   
   
+})
+router.get('/view-order-products/:id',verifylogin,async(req,res)=>{
+  let loged=req.session.user
+  let products=await productHelpers.getOrderProducts(req.params.id)
+  res.render('view-order-products',{user:req.session.user,user:true,loged})
 })
 
 
