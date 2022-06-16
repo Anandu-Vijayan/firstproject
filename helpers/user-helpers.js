@@ -5,6 +5,7 @@ const { status } = require('express/lib/response');
 const { promise, reject } = require('bcrypt/promises');
 const { ObjectId } = require('mongodb');
 const res = require('express/lib/response');
+const async = require('hbs/lib/async');
 module.exports = {
     doSignup: (userData) => {
         console.log(userData);
@@ -79,5 +80,6 @@ module.exports = {
             })
 
         })
-    }
+    },
+  
 }

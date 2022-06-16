@@ -216,4 +216,11 @@ router.get('/OutofStock/:id',(req,res)=>{
   })
 
 })
+router.get('/ordersList',(req,res)=>{
+  
+  res.render("adminpanal/ordersList",{admin:true},)
+})
+
+
+
 module.exports = router;

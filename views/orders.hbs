@@ -14,6 +14,8 @@
           <th class="text-dark">Amount</th>
           <th class="text-dark">Payment</th>
           <th class="text-dark">Status</th>
+          <th class="text-dark">View</th>
+          <th class="text-dark">Option</th>
           
           
         </tr>
@@ -30,6 +32,14 @@
           <td>{{this.status}}</td>
           <td>
             <a href="/view-order-products/{{this._id}}" class="btn btn-primary">View Products</a>
+             <td>
+                      {{#if this.status }}
+                      <span  class="badge bg-label-primary me-1 btn btn-primary"> <a href="/cancelOrder/{{this._id}}">Cancel</a></span>
+                      {{else}}
+                      <span class="badge bg-label-danger me-1 btn btn-primary">Canceled</span>
+                      {{/if}}
+                    </td>
+           
           </td>
 
         </tr>

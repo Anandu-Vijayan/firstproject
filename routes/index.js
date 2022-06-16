@@ -267,7 +267,7 @@ router.get ('/orders',verifylogin,async(req,res)=>{
 router.get('/view-order-products/:id',verifylogin,async(req,res)=>{
   let loged=req.session.user
   let products=await productHelpers.getOrderProducts(req.params.id)
-  res.render('view-order-products',{user:req.session.user,user:true,loged})
+  res.render('view-order-products',{user:req.session.user,user:true,loged,products})
 })
 
 
@@ -283,7 +283,13 @@ router.get('/contact',verifylogin, (req, res) => {
 router.get('/otp',(req,res)=>{
   res.render('otp')
 })
+router.get('/cancelOrder/:id',(req,res)=>{
+  productHelpers.cancelOrderList(req.params.id).then((cancel)=>{
+    res.redirect('/orders')
 
+  })
+
+})
 
 
 module.exports = router;
