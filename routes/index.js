@@ -180,10 +180,10 @@ router.get('/cart',verifylogin,async (req, res) => {
   res.render('cart',{ user: true, loged,user:req.session.user,products,GrandTotal,totalValue})
   
 })
- router.get('/add-to-cart/:id',verifylogin,(req,res)=>{
+ router.get('/add-to-cart/:id',verifylogin,async(req,res)=>{
    
   if(req.session.user){
-   
+    
    productHelpers.addToCart(req.params.id,req.session.user._id).then((response)=>{
     
 
@@ -232,7 +232,7 @@ router.get('/checkout',verifylogin,async (req, res) => {
   res.render('checkout', { user: true, loged ,total,GrandTotal,user:req.session.user})
 })
 router.post('/checkout',async(req,res)=>{
-  let products=await productHelpers.getCartProductList(req.body.userId)
+  let products=await productHelpers. getCartProductList(req.body.userId)
   let GrandTotal=await productHelpers.getTotalAmount(req.body.userId)
   let total=GrandTotal+120
   productHelpers.placeOrder(req.body,products,total).then((response)=>{
@@ -257,6 +257,7 @@ router.get ('/order-success',verifylogin,(req,res)=>{
 router.get ('/orders',verifylogin,async(req,res)=>{
   let loged = req.session.user
   let orders=await productHelpers.getUserOrders(req.session.user._id)
+  
   
   res.render('orders',{user:req.session.user,user:true,loged,orders})
   
@@ -290,6 +291,27 @@ router.get('/cancelOrder/:id',(req,res)=>{
   })
 
 })
+router.get('/admin/ordersList',(req,res)=>{
+
+  productHelpers.getAllOrders().then((orderss)=>{
+  res.render('adminpanal/ordersList',{admin:true,orderss})
+  console.log("ggggggggggggggggggg");
+}) 
+
+})
+router.get('/wishlist',verifylogin,async(req, res) => {
+  let loged = req.session.user
+  let products=await productHelpers.getWishList(req.session.user._id)
+  console.log(products);
+  res.render('whishlist', { user: true, loged,products})
+})
+router.get('/add-to-wishlist/:id',verifylogin,(req,res)=>{
+  productHelpers.addToWhishlist(req.params.id,req.session.user._id).then(()=>{
+    res.redirect('/wishlist')
+  })
+
+})
+
 
 
 module.exports = router;

@@ -201,7 +201,7 @@ module.exports = {
                 {
                     $project: {
                         item: '$products.item',
-                        quantity: '$products.quantity'
+                        quantity: '$products.quantity',
                     }
                 }, {
                     $lookup: {
@@ -359,9 +359,10 @@ module.exports = {
 
         })
     },
-    placeOrder: (order, products, total) => {
+    placeOrder: (order, product, total) => {
         return new Promise((resolve, reject) => {
-            console.log(order, products, total);
+            console.log(total,product,order);
+            console.log("kakakakkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkksdsadasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             let status = order.paymentmethod === 'COD' ? 'Placed' : 'pending'
             let orderObj = {
                 deliveryDetails: {
@@ -372,12 +373,10 @@ module.exports = {
                     Pincode: order.Pincode,
                     Mobile: order.Mobile,
                     Email: order.Email,
-
-                    Date: order.Date
                 },
                 userId: objectId(order.userId),
                 PaymentMethod: order.paymentmethod,
-                products: products,
+                products: product,
                 Amount: total,
                 status: status,
 
@@ -418,7 +417,9 @@ module.exports = {
                 {
                     $project: {
                         item: '$products.item',
-                        quantity: '$products.quantity'
+                        quantity: '$products.quantity',
+            
+
                     }
                 },
                 {
@@ -450,6 +451,69 @@ module.exports = {
 
         })
     },
-    
+    getAllOrders: () => {
+        return new Promise(async (resolve, reject) => {
+            console.log("jjjjjjjjjjjjj");
+            let orderss = await db.get().collection(collection.ORDER_COLLECTION).find().toArray()
+            console.log(orderss);
+            resolve(orderss)
+        })
+    },
+    addToWhishlist:(productId,userId)=>{
+        return new Promise(async(resolve,reject)=>{
+            let userWish=await db.get().collection(collection.WISH_COLLECTION).findOne({user:objectId(userId)})
+            if(userWish){
+                db.get().collection(collection.WISH_COLLECTION).updateOne({user:objectId(userId)},
+                {
+                    
+                        $push:{products:objectId(productId)}
+                    
+                }
+                
+                ).then((response)=>{
+                    resolve() 
+
+                })
+
+
+            }else{
+                let wishObj={
+                    user:objectId(userId),
+                    products:[objectId(productId)]
+                }
+                db.get().collection(collection.WISH_COLLECTION).insertOne(wishObj).then((response)=>{
+                    resolve()
+                })
+            }
+        })
+    },
+    getWishList:(userId)=>{
+        return new Promise(async(resolve,reject)=>{
+          let wishItems=await db.get().collection(collection.WISH_COLLECTION).aggregate([
+            {
+                $match:{user:objectId(userId)}
+            },
+            {
+                $lookup:{
+                    from:collection.PRODUCT_COLLECTION,
+                    let:{proList:'$products'},
+                    pipeline:[
+                        {
+                            $match:{
+                                $expr:{
+                                    $in:['$_id',"$$proList"]
+                                }
+                            }
+                            
+                        }
+                    ],
+                    as:'wishItems'
+                }
+            }
+          ]).toArray() 
+          resolve(wishItems[0].wishItems)
+        })
+
+    }
 
 }

@@ -6,47 +6,66 @@
               {{!-- <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>Users</h4> --}}
 <!-- Basic Bootstrap Table -->
               <div class="card">
-                <h5 class="card-header">Table Basic</h5>
+                
                 <div class="table-responsive text-nowrap">
                   <table class="table">
                     <thead>
                       <tr>
-                        <th>Product</th>
-                        <th>Qty</th>
-                        <th>User'sName</th>
-                         <th>Amount</th>
-                          <th>User's phonenumber</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th scope="col">No</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Actions</th>
+                    
+
+
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      {{#each users}}
+                      {{#each orderss}}
                       <tr>
-                        <td>{{this.Name}}</td>
-                        <td>{{this.Email}}</td>
-                        <td>{{this.phone_number}}</td> 
+                       
+                        <td>{{inc @index}}</td>
+                         <td>{{this.deliveryDetails.Name}}</td>
+                         <td>{{this.deliveryDetails.Mobile}}</td>
+                        <td>{{this.products.quantity}}</td>
+                        <td></td>
+                        
+                        <td>Rs:{{this.Amount}}/-</td>
+                        
+
+                        {{!-- <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong></strong></td> --}}
+                       
+                        {{!-- <td><span class="badge bg-label-primary me-1">Active</span></td> --}}
                         <td>
-                      {{#if this.status }}
-                      <span class="badge bg-label-primary me-1">Active</span>
-                      {{else}}
-                      <span class="badge bg-label-danger me-1">Blocked</span>
-                      {{/if}}
-                    </td>
-                    <td>
-                      {{#if this.status}}
+                          <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                              <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="/admin/Proced the order/{{this._id}}"
+                                ><i class="bx bx-edit-alt me-1"></i>Proced the order</a
+                              >
+                              <a class="dropdown-item" onclick="return confirm('You Wat to this {{this.Name}}')" href="/admin/delete-product/{{this._id}}"
+                                ><i class="bx bx-trash me-1"></i>Cancel the Order</a
+                              >
+                              {{#if this.status}}
+                               <a class="dropdown-item" href="/admin/instock/{{this._id}}"
+                                ><i class="bx bx-edit-alt me-1"></i>In stock</a
+                              >
+                              {{else}}
+                               <a class="dropdown-item" href="/admin/outofstock/{{this._id}}"
+                                ><i class="bx bx-edit-alt me-1"></i>Out of stock</a
+                              >
+                              {{/if}}
 
-                          <a class="dropdown-item" href="/admin/block-user/{{this._id}}"><i class="bx bx-edit-alt me-1"></i>
-                            Block</a>
-                          {{else}}
-                          <a class="dropdown-item" href="/admin/unblock-user/{{this._id}}"><i class="bx bx-edit-alt me-1"></i>
-                            Unblock</a>
-                          {{/if}}
-                    </td>
-
-                       </tr>
-                    </tbody>
-                    {{/each}}
+                            </div>
+                          </div>
+                        </td>
+                      </tr> 
+                      {{/each}}
                   </table>
                 </div>
               </div>
@@ -54,7 +73,7 @@
               <!-- Footer -->
            
 
-    <!-- Core JS -->
+   <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
     <script src="/admin/assets/vendor/libs/popper/popper.js"></script>
@@ -65,14 +84,14 @@
     <!-- endbuild -->
 
     <!-- Vendors JS -->
+    <script src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
     <!-- Main JS -->
     <script src="/admin/assets/js/main.js"></script>
 
     <!-- Page JS -->
+    <script src="/admin/assets/js/dashboards-analytics.js"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-  </body>
-</html>
 

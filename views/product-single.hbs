@@ -26,21 +26,21 @@
 				<h3>{{product.Name}}</h3>
 				<div class="rating d-flex">
 					<p class="text-left mr-4">
-						<a href="#" class="mr-2">5.0</a>
+						{{!-- <a href="#" class="mr-2">5.0</a>
 						<a href="#"><span class="fa fa-star"></span></a>
 						<a href="#"><span class="fa fa-star"></span></a>
 						<a href="#"><span class="fa fa-star"></span></a>
 						<a href="#"><span class="fa fa-star"></span></a>
-						<a href="#"><span class="fa fa-star"></span></a>
+						<a href="#"><span class="fa fa-star"></span></a> --}}
 					</p>
-					<p class="text-left mr-4">
+					{{!-- <p class="text-left mr-4">
 						<a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
 					</p>
 					<p class="text-left">
 						<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
-					</p>
+					</p> --}}
 				</div>
-				<p class="price"><span>{{product.Price}}</span></p>
+				<p class="price"><span>Rs{{product.Price}}/-</span></p>
 				<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a
 					paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
 				<p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would
@@ -65,13 +65,14 @@
 							</button>
 						</span> --}}
 					</div>
-					<div class="w-100"></div>
+					{{!-- <div class="w-100"></div>
 					<div class="col-md-12">
 						<p style="color: #000;">80 piece available</p>
 					</div>
-				</div>
-				<p><a href="/add-to-cart/{{product._id}}" class="btn btn-primary py-3 px-5 mr-2">Add to Cart </a><a href="cart"
-						class="btn btn-primary py-3 px-5">Buy now</a></p>
+				</div> --}}
+				<p><a href="/add-to-cart/{{product._id}}" class="btn btn-primary py-3 px-5 mr-2">Add to Cart </a>
+				<a href="/add-to-wishlist/{{product._id}}"class="btn btn-primary py-3 px-5">Wish List</a></p>
+						
 			</div>
 		</div>
 	
