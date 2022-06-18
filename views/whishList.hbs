@@ -30,7 +30,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						{{#each products}}
+						{{#each product}}
 						<tr class="alert" role="alert">
 							<td>
 								<label class="checkbox-wrap checkbox-primary">
@@ -39,18 +39,18 @@
 								</label>
 							</td>
 							<td>
-								
-								<div class="img" style="background-image: url(/assets/images/{{this.Image}});"></div>
+							
+								<div class="img" style="background-image: url(/assets/images/{{this.product.Image}});"></div>
 							</td>
 							<td>
 								<div class="email">
-									<span>{{this.Name}}</span>
+									<span>{{this.product.Name}}</span>
 									
 									<span>{{this.product.Discription}}</span>
 									
 								</div>
 							</td>
-							<td>{{this.Price}}</td>
+							<td>{{this.product.Price}}</td>
 						
 							{{!-- <td>
 								<button class="cart-item-count mr-3" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
@@ -59,7 +59,8 @@
 							</td> --}}
 							{{!-- <td>{{this.product.Price }}</td> --}}
 							<td>
-								<button class="cart-item-count mr-3" onclick="removeFromCart('{{this._id}}','{{this.product._id}}')">X</button>
+                                {{this.products._id}}
+								<button class="cart-item-count mr-3" onclick="removeFromWishList('{{this._id}}','{{this.product._id}}')">X</button>
 								
 							</td>
 						</tr>
@@ -77,47 +78,14 @@
 	</div>
 </section>
 <script>
-	function changeQuantity(cartId,productId,userId,count){
-    let quantity=parseInt(document.getElementById(productId).innerHTML)
-    count=parseInt(count)
+function removeFromWishList(wishId,productId){
+	alert("Not workin"+wishId+' '+productId)
 $.ajax({
     
-    url:'/change-product-quantity',
-    data:{
-
-        user:userId,
-        cart:cartId,
-        product:productId,
-        count:count,
-        quantity:quantity 
-
-    },
-    method:'post',
-    success:(response)=>{
-        if(response.removeProduct){
-            alert("Product Removed from cart")
-            location.reload()
-        }else{
-			console.log(response)
-            document.getElementById(productId).innerHTML=quantity+count
-			document.getElementById('total1').innerHTML=response.total
-			document.getElementById('total').innerHTML=response.GrandTotal
-        }
-
-    }
-
-})
-}
-
-
-function removeFromCart(cartId,productId){
-	alert("Not workin"+cartId+' '+productId)
-$.ajax({
-    
-    url:'/remove-from-cart',
+    url:"/remove-from-Wishlist",
 	method:'post',
     data:{    
-        cart:cartId,
+        wishList:wishId,
         product:productId,
     },
     success:(response)=>{

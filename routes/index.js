@@ -252,7 +252,7 @@ router.get ('/order-success',verifylogin,(req,res)=>{
     // res.redirect('/login')
   
   
-})
+}) 
 
 router.get ('/orders',verifylogin,async(req,res)=>{
   let loged = req.session.user
@@ -301,15 +301,24 @@ router.get('/admin/ordersList',(req,res)=>{
 })
 router.get('/wishlist',verifylogin,async(req, res) => {
   let loged = req.session.user
-  let products=await productHelpers.getWishList(req.session.user._id)
-  console.log(products);
-  res.render('whishlist', { user: true, loged,products})
+  console.log("sdasdfuksgdusdfgufdguidfiffsdf55555555555555555555555555555555555555");
+  let product=await productHelpers.getWishList(req.session.user._id)
+  console.log(product);
+  res.render('whishlist', { user: true, loged,product})
 })
 router.get('/add-to-wishlist/:id',verifylogin,(req,res)=>{
   productHelpers.addToWhishlist(req.params.id,req.session.user._id).then(()=>{
     res.redirect('/wishlist')
   })
-
+ 
+})
+router.post("/remove-from-Wishlist",(req,res)=>{
+  console.log(req.body);
+  console.log('dsdd'+req.body.wishList+" gg "+req.body.product);
+  productHelpers.removeFromWishList(req.body).then((response)=>{
+    res.json(response)
+    console.log("workinkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+  }) 
 })
 
 
