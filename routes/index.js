@@ -235,8 +235,21 @@ router.post('/checkout',async(req,res)=>{
   let products=await productHelpers. getCartProductList(req.body.userId)
   let GrandTotal=await productHelpers.getTotalAmount(req.body.userId)
   let total=GrandTotal+120
-  productHelpers.placeOrder(req.body,products,total).then((response)=>{
-    res.json({status:true})
+  productHelpers.placeOrder(req.body,products,total).then((orderId)=>{
+    console.log("jasbcasxcbhxzchbhzclvxcbx");
+    console.log(orderId);
+    if(req.body['Payment-Method']==='COD'){
+      res.json({codSuccess:true}) 
+
+    }else{
+      productHelpers.generateRazorpay(orderId,total).then((response)=>{
+        console.log(response);
+        res.json(response)
+
+      })
+
+    }
+    
   
   })
   console.log(req.body);
@@ -320,7 +333,10 @@ router.post("/remove-from-Wishlist",(req,res)=>{
     console.log("workinkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
   }) 
 })
-
+router.post('/verify-Payment',(req,res)=>{
+  console.log(req.body);
+})
+  
 
 
 module.exports = router;
