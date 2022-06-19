@@ -304,6 +304,7 @@ router.get('/cancelOrder/:id',(req,res)=>{
   })
 
 })
+
 router.get('/admin/ordersList',(req,res)=>{
 
   productHelpers.getAllOrders().then((orderss)=>{
@@ -334,7 +335,34 @@ router.post("/remove-from-Wishlist",(req,res)=>{
   }) 
 })
 router.post('/verify-Payment',(req,res)=>{
-  console.log(req.body);
+  console.log("pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
+  productHelpers.verifyPayment(req.body).then(()=>{
+    productHelpers.chagePayementStatus(req.body['recepit']).then(()=>{
+      console.log("Payment successfull");
+      res.json({status:true})
+    })
+
+  }).catch((err)=>{
+    console.log(err);
+    res.json({status:false,errMsg:''})
+  })
+}) 
+router.get ('admin/ordersList',verifylogin,async(req,res)=>{
+  let loged = req.session.user
+  let orders=await productHelpers.getUserOrders(req.session.user._id)
+  
+  
+  res.render('adminpanal/ordersList',{user:req.session.user,user:true,loged,orders})
+  
+    // res.redirect('/login')
+  
+  
+})
+router.get('/cancelsOrder/:id',(req,res)=>{
+  productHelpers.cancelOrderList(req.params.id).then((cancel)=>{
+    res.redirect('/admin/ordersList')
+
+  })
 })
   
 

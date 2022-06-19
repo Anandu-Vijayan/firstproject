@@ -216,6 +216,19 @@ router.get('/OutofStock/:id',(req,res)=>{
   })
 
 })
+router.get('/delete-order/:id',(req,res)=>{
+  if(req.session.adminlog){
+  let orderId=req.params.id 
+  console.log(orderId);
+  productHelpers.deleteOrder(orderId).then((response)=>{
+    res.redirect('/admin/ordersList')
+  })
+}else{
+  res.redirect("/admin")
+}
+
+})
+
 
 
 

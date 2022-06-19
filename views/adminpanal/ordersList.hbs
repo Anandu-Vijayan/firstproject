@@ -1,97 +1,50 @@
-<!-- Content wrapper -->
-          <div class="content-wrapper">
-            <!-- Content -->
-
-            <div class="container-xxl flex-grow-1 container-p-y">
-              {{!-- <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>Users</h4> --}}
-<!-- Basic Bootstrap Table -->
-              <div class="card">
-                
-                <div class="table-responsive text-nowrap">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">User Name</th>
-                        <th scope="col">Phone Number</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Qty</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Actions</th>
-                    
-
-
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                      {{#each orderss}}
-                      <tr>
-                       
-                        <td>{{inc @index}}</td>
-                         <td>{{this.deliveryDetails.Name}}</td>
-                         <td>{{this.deliveryDetails.Mobile}}</td>
-                        <td>{{this.products.quantity}}</td>
-                        <td></td>
-                        
-                        <td>Rs:{{this.Amount}}/-</td>
-                        
-
-                        {{!-- <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong></strong></td> --}}
-                       
-                        {{!-- <td><span class="badge bg-label-primary me-1">Active</span></td> --}}
-                        <td>
-                          <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" href="/admin/Proced the order/{{this._id}}"
-                                ><i class="bx bx-edit-alt me-1"></i>Proced the order</a
-                              >
-                              <a class="dropdown-item" onclick="return confirm('You Wat to this {{this.Name}}')" href="/admin/delete-product/{{this._id}}"
-                                ><i class="bx bx-trash me-1"></i>Cancel the Order</a
-                              >
-                              {{#if this.status}}
-                               <a class="dropdown-item" href="/admin/instock/{{this._id}}"
-                                ><i class="bx bx-edit-alt me-1"></i>In stock</a
-                              >
-                              {{else}}
-                               <a class="dropdown-item" href="/admin/outofstock/{{this._id}}"
-                                ><i class="bx bx-edit-alt me-1"></i>Out of stock</a
-                              >
-                              {{/if}}
-
-                            </div>
-                          </div>
-                        </td>
-                      </tr> 
-                      {{/each}}
-                  </table>
-                </div>
-              </div>
-              <!--/ Basic Bootstrap Table -->
-              <!-- Footer -->
+<section>
+  <div class="container">
+    <div class="row mt-4">
+      {{!-- <a href="/products" class="btn btn-success ml-auto">Add Product</a> --}}
+    </div>
+    <table class="table mt-5">
+      <thead>
+        <tr>
+          
+          <th class="text-dark">Name</th>
+          <th class="text-dark">Address</th>
+          <th class="text-dark">Pincode</th>
+          {{!-- <th class="text-dark">Mobile</th> --}}
+          <th class="text-dark">Amount</th>
+          <th class="text-dark">Payment</th>
+          
+          <th class="text-dark"></th>
+          <th class="text-dark">Option</th>
+          
+          
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orderss}}
+        <tr>
+          
+          <td>{{this.deliveryDetails.Name}}</td>
+          <td>{{this.deliveryDetails.Address}}</td>
+          <td>{{this.deliveryDetails.Pincode}}</td>
+          <td>{{this.Amount}}/-</td>
+          <td>{{this.PaymentMethod}}</td>
+          
+          <td>
+            {{!-- <a href="/view-order-products/{{this._id}}" class="btn btn-primary">View Products</a> --}}
+             <td>
+                      {{#if this.status }}
+                      <span  class="badge bg-label-primary me-1"class="btn btn-danger"> <a href="/cancelsOrder/{{this._id}}">Cancel</a></span>
+                      {{else}}
+                      <span class="badge bg-label-danger me-1 btn btn-primary">Canceled</span>
+                      {{/if}} 
+                    </td>
            
+          </td>
 
-   <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="/admin/assets/vendor/libs/popper/popper.js"></script>
-    <script src="/admin/assets/vendor/js/bootstrap.js"></script>
-    <script src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
-    <script src="/admin/assets/vendor/js/menu.js"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-    <script src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-
-    <!-- Main JS -->
-    <script src="/admin/assets/js/main.js"></script>
-
-    <!-- Page JS -->
-    <script src="/admin/assets/js/dashboards-analytics.js"></script>
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>

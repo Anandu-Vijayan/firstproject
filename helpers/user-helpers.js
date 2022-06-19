@@ -81,5 +81,13 @@ module.exports = {
 
         })
     },
-  
+    cancelorder:(id)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:ObjectId(id)},{$set:{status:Placed,status:false}}).then((canceled) => {
+                resolve(canceled)
+                console.log(canceled);
+            })
+
+        })
+    },
 }

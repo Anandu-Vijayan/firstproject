@@ -187,16 +187,14 @@
     "image": "https://example.com/your_logo",
     "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     "handler": function (response){
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature)
+       
 
 		verifypayment(response,order)
     },
     "prefill": {
-        "name": "Gaurav Kumar",
-        "email": "gaurav.kumar@example.com",
-        "contact": "9999999999"
+        "name": "Magical Spirtis",
+        "email": "admin.magicalspirits@gmail.com",
+        "contact": "+91 9895767256"
     },
     "notes": {
         "address": "Razorpay Corporate Office"
@@ -216,7 +214,16 @@ rzp1.open();
 				order
 
 			},
-			method:'post'
+			method:'post',
+			success:(response)=>{
+				if(response.status){
+					location.href='/order-success'
+				}else{
+					alert("payment Failed")
+				}
+				
+
+			}
 			
 		})
 	}

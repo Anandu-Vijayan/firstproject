@@ -5,7 +5,7 @@ const Razorpay = require('razorpay');
 var instance = new Razorpay({
     key_id: 'rzp_test_LzENomul3uevEZ',
     key_secret: 'XR8HpjEDW4U4yk01pct2rnkA',
-  });
+});
 var db = require('../config/connection')
 var collection = require('../config/users')
 var objectId = require('mongodb').ObjectId
@@ -366,7 +366,7 @@ module.exports = {
     },
     placeOrder: (order, product, total) => {
         return new Promise((resolve, reject) => {
-            console.log(total,product,order);
+            console.log(total, product, order);
             console.log("kakakakkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkksdsadasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             let status = order.paymentmethod === 'COD' ? 'Placed' : 'pending'
             let orderObj = {
@@ -394,7 +394,7 @@ module.exports = {
 
         })
 
-    },  
+    },
     getCartProductList: (userId) => {
         return new Promise(async (resolve, reject) => {
             let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
@@ -423,7 +423,7 @@ module.exports = {
                     $project: {
                         item: '$products.item',
                         quantity: '$products.quantity',
-            
+
 
                     }
                 },
@@ -447,9 +447,9 @@ module.exports = {
 
         })
     },
-    cancelOrderList:(id)=>{
-        return new Promise((resolve,reject)=>{
-            db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(id)},{$set:{status:false}}).then((cancel) => {
+    cancelOrderList: (id) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.ORDER_COLLECTION ).updateOne({ _id: objectId(id) }, { $set: { status: false } }).then((cancel) => {
                 resolve(cancel)
                 console.log(cancel);
             })
@@ -545,7 +545,7 @@ module.exports = {
             resolve(cartItems)
         })
     },
-     removeFromWishList: (details) => {
+    removeFromWishList: (details) => {
         return new Promise((resolve, reject) => {
 
             db.get().collection(collection.WISH_COLLECTION)
@@ -558,21 +558,59 @@ module.exports = {
                 })
         })
     },
-    generateRazorpay:(orderId,total)=>{
+    generateRazorpay: (orderId, total) => {
         console.log(orderId);
-        return new Promise((resolve,reject)=>{
-            var options ={
-                amount:total,
-                currency:"INR",
-                receipt:"order"+orderId.insertedId
+        return new Promise((resolve, reject) => {
+            var options = {
+                amount: total,
+                currency: "INR",
+                receipt: "order" + orderId.insertedId
             };
-            instance.orders.create(options, function(err,order){
-                console.log("New Orders :",order);
+            instance.orders.create(options, function (err, order) {
+                console.log("New Orders :", order);
                 resolve(order)
             })
-             
-           
-})
-    }
+
+
+        })
+        
+    },
+    verifyPayment:(details)=>{
+        return new Promise((resolve,reject)=>{
+            const crypto =require('crypto');
+            let hmac =crypto.createHmac('sha256','XR8HpjEDW4U4yk01pct2rnkA')
+
+            hmac.update(details['payment[razorpay_order_id]']+'|'+details['payment[razorpay_payment_id]']);
+            hmac=hmac.digest('hex')
+            if(hmac==details['payment[razorpay_signature]']){
+                resolve()
+            }else{
+                reject()
+            }
+
+
+        })
+    },
+    chagePayementStatus:(orderId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId)},
+            {
+                $set:{
+                    status:'Placed'
+                }
+            }
+            ).then(()=>{
+                resolve( )
+            })
+        })
+    },
+    deleteOrder: (orderId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.ORDER_COLLECTION).deleteOne({ _id: objectId(orderId) }).then((response) => {
+                resolve(response)
+            })
+
+        })
+    },
 
 }
