@@ -357,7 +357,7 @@ router.get ('admin/ordersList',verifylogin,async(req,res)=>{
     // res.redirect('/login')
   
   
-})
+}) 
 router.get('/cancelsOrder/:id',(req,res)=>{
   productHelpers.cancelOrderList(req.params.id).then((cancel)=>{
     res.redirect('/admin/ordersList')

@@ -207,7 +207,8 @@ var rzp1 = new Razorpay(options);
 rzp1.open();
 	}
 	function verifypayment(payment,order){
-		$ajax({
+		console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
+		$.ajax({
 			url:'/verify-Payment',
 			data:{
 				payment,
@@ -216,9 +217,12 @@ rzp1.open();
 			},
 			method:'post',
 			success:(response)=>{
+				console.log("gggggggggggggg")
 				if(response.status){
+					console.log("llllllllllllll")
 					location.href='/order-success'
 				}else{
+					console.log("kkkkkkkkkkkkkkkkkkk")
 					alert("payment Failed")
 				}
 				
