@@ -63,6 +63,8 @@
 								<button class="cart-item-count mr-3" onclick="removeFromWishList('{{this._id}}','{{this.product._id}}')">X</button>
 								
 							</td>
+							<td>	<p class="text-center"><a href="/add-to-cart/{{product._id}}" class="btn btn-primary py-3 px-4">Add to cart</a>
+				</p></td>
 						</tr>
 					</tbody>
 					{{/each}}
@@ -71,8 +73,7 @@
 			</div>
 		</div>
 	
-				<p class="text-center"><a href="checkout" class="btn btn-primary py-3 px-4">Proceed to Checkout</a>
-				</p>
+			
 			</div>	
 		</div>
 	</div>
