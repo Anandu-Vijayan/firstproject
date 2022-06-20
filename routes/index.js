@@ -26,10 +26,19 @@ router.get('/',async function (req, res, next) {
   let cartCount=null
   if(req.session.user){
    cartCount=await productHelpers.getCartCount(req.session.user._id)
-  }  
+   productHelpers.getAllProducts().then((product)=>{
+    res.render('index', { user: true,product,loged, Error: req.session.Error,cartCount});
+   })
+   req.session.Error = false
+  }else{
+    productHelpers.getAllProducts().then((product)=>{
+      res.render('index',{user:true,product})
 
-  res.render('index', { user: true, loged, Error: req.session.Error,cartCount}); 
-  req.session.Error = false
+    })
+    
+
+  }  
+  
 });
 
 /*Login*/
