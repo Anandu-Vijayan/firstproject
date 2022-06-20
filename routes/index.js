@@ -352,7 +352,8 @@ router.post("/remove-from-Wishlist",(req,res)=>{
 router.post('/verify-Payment',(req,res)=>{
   console.log("pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
   productHelpers.verifyPayment(req.body).then(()=>{
-    productHelpers.chagePayementStatus(req.body['recepit']).then(()=>{
+    console.log(req.body);
+    productHelpers.chagePayementStatus(req.body['order[receipt]']).then(()=>{
       console.log("Payment successfull");
       res.json({status:true})
     })

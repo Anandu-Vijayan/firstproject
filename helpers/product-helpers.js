@@ -562,9 +562,9 @@ module.exports = {
         console.log(orderId);
         return new Promise((resolve, reject) => {
             var options = {
-                amount: total,
+                amount: total*100,
                 currency: "INR",
-                receipt: "order" + orderId
+                receipt: "" + orderId
             };
             instance.orders.create(options, function (err, order) {
                 console.log("New Orders :", order);
@@ -593,6 +593,8 @@ module.exports = {
     },
     chagePayementStatus:(orderId)=>{
         return new Promise((resolve,reject)=>{
+            console.log("khhfu666666666666666666666666666666666666666666");
+            console.log(orderId);
             db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId)},
             {
                 $set:{
