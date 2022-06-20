@@ -389,7 +389,7 @@ module.exports = {
 
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
                 db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(order.userId) })
-                resolve(response)
+                resolve(response.insertedId)
             })
 
         })
@@ -564,7 +564,7 @@ module.exports = {
             var options = {
                 amount: total,
                 currency: "INR",
-                receipt: "order" + orderId.insertedId
+                receipt: "order" + orderId
             };
             instance.orders.create(options, function (err, order) {
                 console.log("New Orders :", order);

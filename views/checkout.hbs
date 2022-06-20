@@ -126,7 +126,7 @@
 							<div class="form-group">
 								<div class="col-md-12">
 									<div class="radio">
-										<label><input type="radio" name="paymentmethod"  value="Online Pyament" class="mr-2">Card</label>
+										<label><input type="radio" name="paymentmethod"  value="Online Pyament" class="mr-2">Online Payment</label>
 									</div>
 								</div>
 							</div>
@@ -165,6 +165,7 @@
 			data:$('#checkout-form').serialize(),
 			success:(response)=>{
 				if(response.codSuccess){
+					console.log('555555555555555555555555555')
 					location.href="/order-success"
 				}else{
 					razorpayPayment(response)

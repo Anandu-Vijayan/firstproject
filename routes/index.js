@@ -236,14 +236,20 @@ router.post('/checkout',async(req,res)=>{
   let GrandTotal=await productHelpers.getTotalAmount(req.body.userId)
   let total=GrandTotal+120
   productHelpers.placeOrder(req.body,products,total).then((orderId)=>{
+    let conform={ID:orderId,codSuccess:true}
     console.log("jasbcasxcbhxzchbhzclvxcbx");
-    console.log(orderId);
-    if(req.body['Payment-Method']==='COD'){
-      res.json({codSuccess:true}) 
+    console.log(req.body);
+    if(req.body['paymentmethod']=='COD'){
+      console.log('6565656565656565')
+      console.log(conform.codSuccess)
+      
+      res.json(conform) 
 
     }else{
       productHelpers.generateRazorpay(orderId,total).then((response)=>{
         console.log(response);
+        response.codSuccess=false
+        response.ID=orderId
         res.json(response)
 
       })
