@@ -608,7 +608,7 @@ module.exports = {
               "transactions": [{
                   "item_list": {
                       "items": [{
-                          "name": "Red Sox Hat",
+                          "name": "Magical Spirits",
                           "sku": "001",
                           "price": total,
                           "currency": "USD",
