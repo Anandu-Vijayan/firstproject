@@ -7,9 +7,11 @@ var config=require('../config/otp')
 var productHelper = require('../helpers/product-helpers')
 const userHelpers = require('../helpers/user-helpers');
 const async = require('hbs/lib/async');
+const paypal =require('paypal-rest-sdk');
 const { response } = require('express');
 const { validateExpressRequest } = require('twilio/lib/webhooks/webhooks');
 const { redirect } = require('express/lib/response');
+const { payment } = require('paypal-rest-sdk');
 const client = require("twilio")(config.accountSID, config.authToken);
 
 const verifylogin = (req, res, next) => {
@@ -245,7 +247,8 @@ router.post('/checkout',async(req,res)=>{
   let GrandTotal=await productHelpers.getTotalAmount(req.body.userId)
   let total=GrandTotal+120
   productHelpers.placeOrder(req.body,products,total).then((orderId)=>{
-    let conform={ID:orderId,codSuccess:true}
+    req.session.orderId=orderId
+    let conform={ID:orderId,codSuccess:'COD'}
     console.log("jasbcasxcbhxzchbhzclvxcbx");
     console.log(req.body);
     if(req.body['paymentmethod']=='COD'){
@@ -254,15 +257,21 @@ router.post('/checkout',async(req,res)=>{
       
       res.json(conform) 
 
-    }else{
+    }else if(req.body['paymentmethod']=='Online Pyament'){
       productHelpers.generateRazorpay(orderId,total).then((response)=>{
         console.log(response);
-        response.codSuccess=false
+        response.codSuccess='razorpay'
         response.ID=orderId
         res.json(response)
 
       })
 
+    }else{
+      productHelpers.generatePaypal(orderId,total).then((payment)=>{
+        console.log(response);
+        response.ID=orderId
+        res.json(payment)
+      })
     }
     
   
@@ -272,6 +281,30 @@ router.post('/checkout',async(req,res)=>{
   
  
 })
+router.get('/success', (req, res) => {
+  const payerId = req.query.PayerID;
+  const paymentId = req.query.paymentId;
+
+  const execute_payment_json = {
+    "payer_id": payerId,
+    "transactions": [{
+        "amount": {
+            "currency": "USD",
+            "total": "25.00"
+        }
+    }]
+  };
+
+  paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+    if (error) {
+        console.log(error.response);
+        throw error;
+    } else {
+        console.log(JSON.stringify(payment));
+        res.redirect('/order-success');
+    }
+});
+});
 router.get ('/order-success',verifylogin,(req,res)=>{
   let loged = req.session.user
   

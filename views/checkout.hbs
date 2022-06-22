@@ -24,19 +24,21 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="firstname">Firt Name</label>
-								<input type="text" id="Name" name="Name" class="form-control" placeholder="">
+								<input type="text" id="Name" name="Name" class="form-control" onkeyup="validatName()" placeholder="First Name">
+								<span id="name" class="text-danger"></span>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="lastname">Last Name</label>
-								<input type="text" id="Last_Name" name="Last name"  class="form-control" placeholder="">
+								<input type="text" id="Last_Name" name="Last name"  class="form-control" onkeyup="validatLastname()" placeholder="Last Name">
+								<span id="nameerr" class="text-danger"></span>
 							</div>
 						</div>
 					<div class="col-md-6">
 							<div class="form-group">
 								<label for="lastname">Place</label>
-								<input type="text" id="Place" name="Place"  class="form-control" placeholder="">
+								<input type="text" id="Place" name="Place"  class="form-control" placeholder="Place">
 							</div>
 						</div>
 						<div class="w-100"></div>
@@ -56,27 +58,27 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="towncity">Town / City</label>
-								<input type="text" id="City" name="City" class="form-control" placeholder="">
+								<input type="text" id="City" name="City" class="form-control" placeholder="Town/City">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="postcodezip">Pincode</label>
-								<input type="text" id="Pincode" name="Pincode" class="form-control" placeholder="">
+								<input type="text" id="Pincode" name="Pincode" class="form-control" placeholder="Pincode">
 							</div>
 						</div>
 						<div class="w-100"></div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="phone">Phone</label>
-								<input type="text" id="Mobile" name="Mobile" class="form-control" placeholder="">
+								<input type="text" id="Mobile" name="Mobile" class="form-control" placeholder="Phone number">
 								<input type="text" name="userId" id="" value="{{user._id}}" hidden>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="emailaddress">Email Address</label>
-								<input type="text" id="Email" name="Email" class="form-control" placeholder="">
+								<input type="text" id="Email" name="Email" class="form-control" placeholder="Email">
 							</div>
 						</div>
 						<div class="w-100"></div>
@@ -126,7 +128,7 @@
 							<div class="form-group">
 								<div class="col-md-12">
 									<div class="radio">
-										<label><input type="radio" name="paymentmethod"  value="Online Pyament" class="mr-2">Online Payment</label>
+										<label><input type="radio" name="paymentmethod"  value="OnlinePyament" class="mr-2">Online Payment</label>
 									</div>
 								</div>
 							</div>
@@ -164,21 +166,29 @@
 			method:'post',
 			data:$('#checkout-form').serialize(),
 			success:(response)=>{
-				if(response.codSuccess){
+				if(response.codSuccess=='COD'){
 					console.log('555555555555555555555555555')
 					location.href="/order-success"
-				}else{
+				}else if(response.codSuccess=='razorpay'){
 					razorpayPayment(response)
 
+				}else{
+					alert("Paypallllllllllll")
+					  for(let i = 0;i < response.links.length;i++){
+                   if(response.links[i].rel === 'approval_url'){
+                     location.href=response.links[i].href;
+                   }
+                   }
+					
 				}
-				alert("working")
+				alert("Let's Go")
 			}
 
 
 		})
 	})
 	function razorpayPayment(order){
-		alert("Not workinggggggggggggggggggggggggggg")
+		alert("Are You ready For Payment")
 		var options = {
     "key": "rzp_test_LzENomul3uevEZ", // Enter the Key ID generated from the Dashboard
     "amount":order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -232,5 +242,5 @@ rzp1.open();
 			
 		})
 	}
-
+	
 </script>

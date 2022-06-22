@@ -47,10 +47,15 @@ router.get('/logout',(req,res)=>{
   
 })
 router.get('/table',(req,res)=>{
+  if(req.session.adminlog){
   productHelpers.getAllUsers().then((users)=>{
     res.render('adminpanal/table',{admin:true,users})
 
   })
+}else{
+  res.redirect("/admin")
+
+}
 
   
 })
@@ -215,19 +220,33 @@ router.get('/OutofStock/:id',(req,res)=>{
 
   })
 
-})
-router.get('/delete-order/:id',(req,res)=>{
-  if(req.session.adminlog){
-  let orderId=req.params.id 
-  console.log(orderId);
-  productHelpers.deleteOrder(orderId).then((response)=>{
-    res.redirect('/admin/ordersList')
-  })
-}else{
-  res.redirect("/admin")
-}
+}) 
 
-})
+// router.get('/delete-order/:id',(req,res)=>{
+//   if(req.session.adminlog){
+//   let orderId=req.params.id 
+//   console.log(orderId);
+//   productHelpers.deleteOrder(orderId).then((response)=>{
+//     res.redirect('/admin/ordersList')
+//   })
+// }else{
+//   res.redirect("/admin")
+// }
+
+// })
+// router.get('admin/orderList',async(req,res)=>{
+//   if(req.session.adminlog){
+//   let orderss=await productHelpers.getAllUsers().then((orderss)=>{
+//     res.render('adminpanal/table',{admin:true,orderss})
+
+//   })
+// }else{
+//   res.redirect("/admin")
+
+// }
+// })
+
+
 
 
 

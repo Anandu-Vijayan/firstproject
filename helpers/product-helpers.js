@@ -6,6 +6,12 @@ var instance = new Razorpay({
     key_id: 'rzp_test_LzENomul3uevEZ',
     key_secret: 'XR8HpjEDW4U4yk01pct2rnkA',
 });
+const paypal =require('paypal-rest-sdk');
+paypal.configure({
+    'mode' : 'sandbox',
+    'client_id': 'Af75DnFpVjrqCa9a-umcYLEmTvYvpXtPjkXz58KI5Ys6JoikhsrIpJruJZ9ssVYb51_9d4X80erZv4eG',
+    'client_secret': 'ENxAvJ1jLE8G6mhr0q1sL2-qrGbEtsvVUYw4Doi2wtuMq_HQN7s6qh24rSI1KDfSoY2NTVK-z54btyKe'
+})
 var db = require('../config/connection')
 var collection = require('../config/users')
 var objectId = require('mongodb').ObjectId
@@ -393,7 +399,7 @@ module.exports = {
             })
 
         })
-
+ 
     },
     getCartProductList: (userId) => {
         return new Promise(async (resolve, reject) => {
@@ -575,6 +581,51 @@ module.exports = {
         })
         
     },
+    generatePaypal:(orderId,total)=>{
+        return new Promise((resolve,reject) => {
+            const create_payment_json = {
+              "intent": "sale",
+              "payer": {
+                  "payment_method": "paypal"
+              },
+              "redirect_urls": {
+                  "return_url": "http://localhost:3000/success",
+                  "cancel_url": "http://localhost:3000/cancel"
+              },
+              "transactions": [{
+                  "item_list": {
+                      "items": [{
+                          "name": "Red Sox Hat",
+                          "sku": "001",
+                          "price": "25.00",
+                          "currency": "USD",
+                          "quantity": 1
+                      }]
+                  },
+                  "amount": {
+                      "currency": "USD",
+                      "total": "25.00"
+                  },
+                  "description": "Hat for the best team ever"
+              }]
+          };
+          
+          paypal.payment.create(create_payment_json, function (error, payment) {
+            if (error) {
+                throw error;
+            } else {
+                resolve(payment)
+                // for(let i = 0;i < payment.links.length;i++){
+                //   if(payment.links[i].rel === 'approval_url'){
+                //     res.redirect(payment.links[i].href);
+                //   }
+                // }
+            }
+          });
+          
+          });
+        },
+
     verifyPayment:(details)=>{
         return new Promise((resolve,reject)=>{
             const crypto =require('crypto');
