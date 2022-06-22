@@ -13,7 +13,8 @@ paypal.configure({
     'client_secret': 'ENxAvJ1jLE8G6mhr0q1sL2-qrGbEtsvVUYw4Doi2wtuMq_HQN7s6qh24rSI1KDfSoY2NTVK-z54btyKe'
 })
 var db = require('../config/connection')
-var collection = require('../config/users')
+var collection = require('../config/users');
+const { resolve } = require('path');
 var objectId = require('mongodb').ObjectId
 module.exports = {
     addProduct: (product, callback) => {
@@ -370,6 +371,18 @@ module.exports = {
 
         })
     },
+    getTotal:(orderId)=>{
+        return new Promise((resolve,reject)=>{
+            console.log(orderId);
+            db.get().collection(collection.ORDER_COLLECTION).findOne({_id: objectId(orderId) }).then((response)=>{
+                console.log(response);
+                resolve(response)
+                
+            })
+        })
+
+    },
+
     placeOrder: (order, product, total) => {
         return new Promise((resolve, reject) => {
             console.log(total, product, order);
@@ -597,14 +610,14 @@ module.exports = {
                       "items": [{
                           "name": "Red Sox Hat",
                           "sku": "001",
-                          "price": "25.00",
+                          "price": total,
                           "currency": "USD",
                           "quantity": 1
                       }]
                   },
                   "amount": {
                       "currency": "USD",
-                      "total": "25.00"
+                      "total": total
                   },
                   "description": "Hat for the best team ever"
               }]

@@ -247,7 +247,9 @@ router.post('/checkout',async(req,res)=>{
   let GrandTotal=await productHelpers.getTotalAmount(req.body.userId)
   let total=GrandTotal+120
   productHelpers.placeOrder(req.body,products,total).then((orderId)=>{
-    req.session.orderId=orderId
+    console.log(orderId); 
+    req.session.orderid=orderId 
+
     let conform={ID:orderId,codSuccess:'COD'}
     console.log("jasbcasxcbhxzchbhzclvxcbx");
     console.log(req.body);
@@ -281,7 +283,9 @@ router.post('/checkout',async(req,res)=>{
   
  
 })
-router.get('/success', (req, res) => {
+router.get('/success',async (req, res) => {
+  let total=await productHelpers.getTotal(req.session.orderid)
+  console.log(total.Amount);
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
 
@@ -290,7 +294,8 @@ router.get('/success', (req, res) => {
     "transactions": [{
         "amount": {
             "currency": "USD",
-            "total": "25.00"
+
+            "total":total.Amount
         }
     }]
   };
