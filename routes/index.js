@@ -221,6 +221,22 @@ router.get('/about',verifylogin, (req, res) => {
   let loged = req.session.user
   res.render('about', { user: true, loged })
 })
+router.get('/blog',verifylogin, (req, res) => { 
+  let loged = req.session.user
+  res.render('blog', { user: true, loged })
+})
+router.get('/forgot',verifylogin,(req,res)=>{
+  let loged = req.session.user
+  res.render('forgot',loged)
+
+})
+router.post('/forgot',(req,res)=>{
+  userHelpers.changePassword(req.body).then((response)=>{
+    req.session.user=false
+    res.redirect('/login')
+  })
+  
+})
 router.get('/product-single/:id',verifylogin, (req, res) => {
   let loged = req.session.user
   productHelpers.getSingleProduct(req.params.id).then((product)=>{

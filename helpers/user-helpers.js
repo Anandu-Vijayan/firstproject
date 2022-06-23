@@ -90,4 +90,16 @@ module.exports = {
 
         })
     },
+    changePassword:(id)=>{
+        return new Promise(async(resolve,reject)=>{
+            let data=await db.get().collection(collection.USER_COLLECTION).findOne({Email:id.Email})
+            if(data){
+             id.password=await bcrypt.hash(id.password, 10)
+                db.get().collection(collection.USER_COLLECTION).updateOne({Email:id.Email},{$set:{password:id.password}}).then((response)=>{
+                    resolve(response)
+                })
+            }
+        })
+    }
+
 }
