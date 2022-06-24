@@ -234,8 +234,11 @@ router.post('/addcoupon',(req,res)=>{
 })
 router.get('/deletecoupon',(req,res)=>{
   if(req.session.adminlog){
+    productHelpers.getAllCoupon().then((coupon)=>{
+      res.render("adminpanal/deletecoupon",{admin:true,coupon}) 
+
+    })
     
-    res.render("adminpanal/deletecoupon",{admin:true}) 
   
 }else{
   res.redirect("/admin")

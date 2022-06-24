@@ -13,24 +13,25 @@
                       <tr>
                         <th scope="col">No</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Catogaery</th>
-                        <th scope="col">Stock</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Discription</th>
+                        <th scope="col">Issueing Date</th>
+                        <th scope="col">Expairy Date</th>
+                        <th scope="col">Discount %</th>
                         <th scope="col">Actions</th>
 
 
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      {{#each product}}
+                      {{#each coupon}}
                       <tr>
                        
                         <td>{{inc @index}}</td>
                          <td>{{this.Name}}</td>
-                         <td><img src="/assets/images/{{this.Image}}" style="width:100px;height:100px;"></td>
-                        <td>{{this.catogaerys}}</td>
-                        <td>{{this.Stock}}</td>
+                         <td>{{this.Discription}}</td>
+            
+                        <td>{{this.Issueing}}</td>
+                        <td>{{this.Expairy}}</td>
                         <td>{{this.Price}}</td>
                         
 

@@ -492,6 +492,13 @@ module.exports = {
 
         })
     },
+    getAllCoupon:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let coupon= await db.get().collection(collection.COUPON_COLLECTION).find().toArray()
+            resolve(coupon)
+        })
+
+    },
     addToWhishlist: (productId, userId) => {
         let proObj = {
             item: objectId(productId),
