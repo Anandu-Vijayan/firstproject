@@ -483,6 +483,15 @@ module.exports = {
             resolve(orderss)
         })
     },
+    addCoupon: (coupon) => {
+        console.log(coupon);
+        db.get().collection('coupon').insertOne(coupon).then((data) => {
+            console.log(data);
+            
+
+
+        })
+    },
     addToWhishlist: (productId, userId) => {
         let proObj = {
             item: objectId(productId),

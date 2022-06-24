@@ -107,17 +107,10 @@ router.get('/edp',(req,res,next)=>{
   productHelpers.getAllProducts().then((product)=>{
     
     res.render("adminpanal/edp",{admin:true,product}) 
-    
-
   })
 }else{
   res.redirect("/admin")
 }
-
-
-  
-
-
 })
 router.post('/addp',(req,res)=>{
   if(req.session.adminlog){
@@ -216,40 +209,36 @@ router.get('/Instock/:id',(req,res)=>{
 })
 router.get('/OutofStock/:id',(req,res)=>{
   productHelpers.outofStock(req.params.id).then((outofStock)=>{
-    res.redirect('/admin/edp')
+    res.redirect('/admin/edp',)
 
   })
 
 }) 
-
-// router.get('/delete-order/:id',(req,res)=>{
-//   if(req.session.adminlog){
-//   let orderId=req.params.id 
-//   console.log(orderId);
-//   productHelpers.deleteOrder(orderId).then((response)=>{
-//     res.redirect('/admin/ordersList')
-//   })
-// }else{
-//   res.redirect("/admin")
-// }
-
-// })
-// router.get('admin/orderList',async(req,res)=>{
-//   if(req.session.adminlog){
-//   let orderss=await productHelpers.getAllUsers().then((orderss)=>{
-//     res.render('adminpanal/table',{admin:true,orderss})
-
-//   })
-// }else{
-//   res.redirect("/admin")
-
-// }
-// })
-
-
-
-
-
-
-
+router.get('/addcoupon',(req,res)=>{
+  if(req.session.adminlog){
+    
+    res.render("adminpanal/addcoupon",{admin:true}) 
+  
+}else{
+  res.redirect("/admin")
+}
+})
+router.post('/addcoupon',(req,res)=>{
+  if(req.session.adminlog){
+    productHelpers.addCoupon(req.body)
+    res.redirect('addcoupon')
+  }else{
+    res.redirect("/admin")
+  }
+ 
+})
+router.get('/deletecoupon',(req,res)=>{
+  if(req.session.adminlog){
+    
+    res.render("adminpanal/deletecoupon",{admin:true}) 
+  
+}else{
+  res.redirect("/admin")
+}
+})
 module.exports = router;
