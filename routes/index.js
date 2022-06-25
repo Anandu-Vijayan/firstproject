@@ -307,7 +307,7 @@ router.get('/success',async (req, res) => {
   const paymentId = req.query.paymentId;
   productHelpers.chagePayementStatus(req.session.orderid).then(()=>{
     console.log("Payment successfull");
-    
+  
   })
   
 
@@ -363,6 +363,8 @@ router.get('/view-order-products/:id',verifylogin,async(req,res)=>{
 
 router.get('/User',verifylogin, (req, res) => {
   let loged = req.session.user
+  console.log(loged);
+
   res.render('User', { user: true, loged })
 })
 router.get('/contact',verifylogin, (req, res) => {

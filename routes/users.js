@@ -247,7 +247,7 @@ router.get('/delete-coupon/:id',(req,res)=>{
   if(req.session.adminlog){
     let couponId=req.params.id
     productHelpers.deleteCoupon(couponId).then((response)=>{
-      res.redirect("/admin/viewcoupon")
+      res.redirect("admin/viewcoupon")
 
     })
   }else{
