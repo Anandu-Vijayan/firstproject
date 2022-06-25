@@ -1,3 +1,4 @@
+const { response } = require('express');
 var express = require('express');
 const req = require('express/lib/request');
 const { redirect } = require('express/lib/response');
@@ -232,16 +233,26 @@ router.post('/addcoupon',(req,res)=>{
   }
  
 })
-router.get('/deletecoupon',(req,res)=>{
+router.get('/viewcoupon',(req,res)=>{
   if(req.session.adminlog){
     productHelpers.getAllCoupon().then((coupon)=>{
       res.render("adminpanal/deletecoupon",{admin:true,coupon}) 
 
-    })
-    
-  
+    }) 
 }else{
   res.redirect("/admin")
 }
+})
+router.get('/delete-coupon/:id',(req,res)=>{
+  if(req.session.adminlog){
+    let couponId=req.params.id
+    productHelpers.deleteCoupon(couponId).then((response)=>{
+      res.redirect("/admin/viewcoupon")
+
+    })
+  }else{
+    res.redirect("/admin")
+  }
+
 })
 module.exports = router;

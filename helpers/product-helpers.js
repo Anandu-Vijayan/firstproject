@@ -686,9 +686,9 @@ module.exports = {
             })
         })
     },
-    deleteOrder: (orderId) => {
+    deleteCoupon: (couponId) => {
         return new Promise((resolve, reject) => {
-            db.get().collection(collection.ORDER_COLLECTION).deleteOne({ _id: objectId(orderId) }).then((response) => {
+            db.get().collection(collection.COUPON_COLLECTION).deleteOne({ _id: objectId(couponId) }).then((response) => {
                 resolve(response)
             })
 
