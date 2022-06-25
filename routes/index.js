@@ -305,14 +305,19 @@ router.get('/success',async (req, res) => {
   console.log(total.Amount);
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
+  productHelpers.chagePayementStatus(req.session.orderid).then(()=>{
+    console.log("Payment successfull");
+    
+  })
+  
 
   const execute_payment_json = {
     "payer_id": payerId,
     "transactions": [{
         "amount": {
-            "currency": "USD",
+            "currency": "USD", 
 
-            "total":total.Amount
+            "total":total.Amount 
         }
     }]
   };
