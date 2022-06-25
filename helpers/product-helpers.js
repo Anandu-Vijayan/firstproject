@@ -388,6 +388,10 @@ module.exports = {
             console.log(total, product, order);
             console.log("kakakakkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkksdsadasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             let status = order.paymentmethod === 'COD' ? 'Placed' : 'pending'
+            var date = new Date()
+            var month = date.getUTCMonth() + 1
+            var day = date.getUTCDate()
+            var year = date.getUTCFullYear()
             let orderObj = {
                 deliveryDetails: {
                     Name: order.Name,
@@ -402,6 +406,7 @@ module.exports = {
                 PaymentMethod: order.paymentmethod,
                 products: product,
                 Amount: total,
+                date: day + "/" + month + "/" + year,
                 status: status,
 
             }
@@ -424,7 +429,9 @@ module.exports = {
     getUserOrders: (userId) => {
         return new Promise(async (resolve, reject) => {
             console.log(userId);
-            let orders = await db.get().collection(collection.ORDER_COLLECTION).find({ userId: objectId(userId) }).toArray()
+            let orders = await db.get().collection(collection.ORDER_COLLECTION).find({ userId: objectId(userId) })
+            .sort({date:-1})
+            .toArray()
             console.log(orders);
             resolve(orders)
         })
