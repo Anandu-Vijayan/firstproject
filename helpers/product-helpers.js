@@ -726,7 +726,7 @@ module.exports = {
                         db.get().collection(collection.CART_COLLECTION).updateOne({user:objectId(userId)},{
                             $set:{
                                 coupon:code,
-                                coupondiscount:check.offer
+                                coupondiscount:check.DiscountPrice
                             }
                         })
                         resolve({status:'true'})
@@ -752,5 +752,13 @@ module.exports = {
                 resolve({status:false})
             }
         })
+    },
+    checkCartcoupon:(userId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.CART_COLLECTION).findOne({user:objectId(userId)}).then((result)=>{
+                resolve(result)
+            })
+        })
     }
-}
+    
+} 

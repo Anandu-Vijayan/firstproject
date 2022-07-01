@@ -79,7 +79,7 @@
 		<form id="coupon-check">
 			<div class="form-group " style="margin-left:667px" ,"mt-2"> <label>Have coupon?</label>
 				<p class="text danger" id="couponerr"></p>
-				<div class="input-group"> <input type="text" class="form-control coupon" name="couponcode"
+				<div class="input-group"> <input type="text" class="form-control coupon" name="name"
 						placeholder="Coupon code"> <span class="input-group-append"> <button type="submit"
 							class="btn btn-primary btn-apply coupon">Apply</span> </div>
 
@@ -100,13 +100,13 @@
 					</p>
 					<p class="d-flex">
 						<span>Coupon Discount</span>
-						<span>Rs: /-</span>
+						<span>Rs:{{netTotal}} /-</span>
 					</p>
 
 					<hr>
 					<p class="d-flex total-price">
 						<span>Total</span>
-					<h6>Rs.<span id="total">{{GrandTotal}}/-</span></h6></span>
+					<h6>Rs.<span id="total">{{netTotal}}/-</span></h6></span>
 					</p>
 				</div>
 				<p class="text-center"><a href="checkout" class="btn btn-primary py-3 px-4">Proceed to Checkout</a>

@@ -12,6 +12,7 @@ const { response } = require('express');
 const { validateExpressRequest } = require('twilio/lib/webhooks/webhooks');
 const { redirect } = require('express/lib/response');
 const { payment } = require('paypal-rest-sdk');
+const { checkCartcoupon } = require('../helpers/product-helpers');
 const client = require("twilio")(config.accountSID, config.authToken);
 
 const verifylogin = (req, res, next) => {
@@ -188,7 +189,16 @@ router.get('/cart',verifylogin,async (req, res) => {
   let totalValue=await productHelpers.getTotalAmount(req.session.user._id)
   console.log(products); 
   let GrandTotal=totalValue+120
-  res.render('cart',{ user: true, loged,user:req.session.user,products,GrandTotal,totalValue})
+  let checkCart=await productHelpers.checkCartcoupon(req.session.user._id)
+  if(checkCart.coupon){
+     netTotal=GrandTotal-checkCart.coupondiscount
+
+
+
+  }else{
+    netTotal=0
+  }
+  res.render('cart',{ user: true, loged,user:req.session.user,products,GrandTotal,totalValue,netTotal})
   
 })
  router.get('/add-to-cart/:id',verifylogin,async(req,res)=>{
