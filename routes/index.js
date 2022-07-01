@@ -252,17 +252,20 @@ router.post("/remove-from-cart",(req,res)=>{
     console.log("workingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
   }) 
 })
-router.get('/checkout',verifylogin,async (req, res) => { 
+router.get('/checkout',verifylogin,async (req, res) => {
+  console.log("000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"); 
+  console.log(req.body);
   let loged = req.session.user
   let total=await productHelpers.getTotalAmount(req.session.user._id)
   let GrandTotal=total+120
   res.render('checkout', { user: true, loged ,total,GrandTotal,user:req.session.user})
 })
 router.post('/checkout',async(req,res)=>{
+  let Touser=await productHelpers.addCouponTouser(req.body.userId,req.body.couponId)
   let products=await productHelpers. getCartProductList(req.body.userId)
   let GrandTotal=await productHelpers.getTotalAmount(req.body.userId)
   let total=GrandTotal+120
-  productHelpers.placeOrder(req.body,products,total).then((orderId)=>{
+  productHelpers.placeOrder(req.body,products,total,Touser).then((orderId)=>{
     console.log(orderId); 
     req.session.orderid=orderId
 
@@ -442,6 +445,15 @@ router.get('/cancelsOrder/:id',(req,res)=>{
 
   })
 })
+router.post('/apply-coupon',(req,res)=>{
+
+  productHelpers.checkCoupon(req.body.name,req.session.user._id).then((result)=>{
+    res.json(result)
+    
+  })
+
+})
+
   
 
 

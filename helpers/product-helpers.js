@@ -155,7 +155,7 @@ module.exports = {
     addToCart: (productId, userId) => {
         let proObj = {
             item: objectId(productId),
-            quantity: 1
+            quantity: 1,
         }
         return new Promise(async (resolve, reject) => {
             let userCart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
@@ -176,7 +176,7 @@ module.exports = {
                 } else {
                     db.get().collection(collection.CART_COLLECTION).updateOne({ user: objectId(userId) },
                         {
-                            $push: { products: proObj }
+                            $push: { products: proObj}
                         }
 
 
@@ -189,7 +189,10 @@ module.exports = {
                 console.log('OOIUUUUUU');
                 let cartObj = {
                     user: objectId(userId),
-                    products: [proObj]
+                    products: [proObj],
+                    coupon:0
+
+
                 }
                 db.get().collection(collection.CART_COLLECTION).insertOne(cartObj).then((data) => {
                     resolve(data)
@@ -701,5 +704,53 @@ module.exports = {
 
         })
     },
-    
+    checkCoupon:(code,userId)=>{
+        return new Promise(async(resolve,reject)=>{
+            let check= await db.get().collection(collection.COUPON_COLLECTION).findOne({Name:code})
+
+            if(check){
+                let usercoupon= await db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(userId)})
+
+                let user= await db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(userId),coupon:code})
+                if(user){
+                    resolve({status:'Already Used'})
+                }else if(usercoupon.coupon){
+                    let cart=await db.get().collection(collection.CART_COLLECTION).findOne({user:objectId(userId)})
+                    if(cart.coupon){
+                        resolve({status:'only one'})
+                    }else{
+                        db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userId)},{
+                            $push:{coupon:code}
+
+                        })
+                        db.get().collection(collection.CART_COLLECTION).updateOne({user:objectId(userId)},{
+                            $set:{
+                                coupon:code,
+                                coupondiscount:check.offer
+                            }
+                        })
+                        resolve({status:'true'})
+
+                    }
+
+                }else{
+
+                    db.get().collection(collection.CART_COLLECTION).updateOne({user:objectId(userId)},{
+                        $set:{
+                            coupon:code,
+                            coupondiscount:check.offer
+                        }
+                    })
+                    db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userId)},{
+                        $set:{
+                            coupon:[code]
+                        }
+                    })
+                    resolve({status:'true'})
+                }
+            }else{
+                resolve({status:false})
+            }
+        })
+    }
 }

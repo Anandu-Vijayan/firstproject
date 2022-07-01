@@ -21,7 +21,7 @@
 					<thead class="thead-primary">
 						<tr>
 							<th>&nbsp;</th>
-							<th>&nbsp;</th>
+							<th>Image</th>
 							<th>Product</th>
 							<th>Price</th>
 							<th>Quantity</th>
@@ -39,41 +39,53 @@
 								</label>
 							</td>
 							<td>
-								
-								<div class="img" style="background-image: url(/assets/images/{{this.product.Image}});"></div>
+
+								<div class="img" style="background-image: url(/assets/images/{{this.product.Image}});">
+								</div>
 							</td>
 							<td>
 								<div class="email">
 									<span>{{this.product.Name}}</span>
-									
+
 									<span>{{this.product.Discription}}</span>
-									
+
 								</div>
 							</td>
 							<td>Rs:{{this.product.Price}}/-</td>
-						
+
 							<td>
-								<button class="cart-item-count mr-3" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
+								<button class="cart-item-count mr-3"
+									onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
 								<span id="{{this.product._id}}">{{this.quantity}}</span>
-								<button class="cart-item-count ml-3" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
+								<button class="cart-item-count ml-3"
+									onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
 							</td>
-							<td>Rs:{{this.product.Price }}/-</td>
+							<td>Rs:{{this.product.Price}}/-</td>
 							<td>
-								<button class="cart-item-count mr-3" onclick="removeFromCart('{{this._id}}','{{this.product._id}}')">X</button>
-								
+								<button class="cart-item-count mr-3"
+									onclick="removeFromCart('{{this._id}}','{{this.product._id}}')">X</button>
+
 							</td>
 						</tr>
 					</tbody>
 					{{/each}}
 				</table>
-				
-					
+
+
 			</div>
 		</div>
 		<div class="w-100"></div>
-						<div class="form-group " style="margin-left:667px","mt-2"> <label>Have coupon?</label>
-                                <div class="input-group"> <input type="text" class="form-control coupon" name="" placeholder="Coupon code"> <span class="input-group-append"> <button class="btn btn-primary btn-apply coupon">Apply</button> </span> </div>
-                            </div>
+
+		<form id="coupon-check">
+			<div class="form-group " style="margin-left:667px" ,"mt-2"> <label>Have coupon?</label>
+				<p class="text danger" id="couponerr"></p>
+				<div class="input-group"> <input type="text" class="form-control coupon" name="couponcode"
+						placeholder="Coupon code"> <span class="input-group-append"> <button type="submit"
+							class="btn btn-primary btn-apply coupon">Apply</span> </div>
+
+
+			</div>
+		</form>
 		<div class="row justify-content-end">
 			<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
 				<div class="cart-total mb-3">
@@ -86,75 +98,99 @@
 						<span>Delivery</span>
 						<span>Rs:120.00/-</span>
 					</p>
-					
+					<p class="d-flex">
+						<span>Coupon Discount</span>
+						<span>Rs: /-</span>
+					</p>
+
 					<hr>
 					<p class="d-flex total-price">
 						<span>Total</span>
-						<h6>Rs.<span id="total">{{GrandTotal}}/-</span></h6></span>
+					<h6>Rs.<span id="total">{{GrandTotal}}/-</span></h6></span>
 					</p>
 				</div>
 				<p class="text-center"><a href="checkout" class="btn btn-primary py-3 px-4">Proceed to Checkout</a>
 				</p>
-			</div>	
+			</div>
 		</div>
 	</div>
 </section>
 <script>
-	function changeQuantity(cartId,productId,userId,count){
-    let quantity=parseInt(document.getElementById(productId).innerHTML)
-    count=parseInt(count)
-$.ajax({
-    
-    url:'/change-product-quantity',
-    data:{
+	function changeQuantity(cartId, productId, userId, count) {
+		let quantity = parseInt(document.getElementById(productId).innerHTML)
+		count = parseInt(count)
+		$.ajax({
 
-        user:userId,
-        cart:cartId,
-        product:productId,
-        count:count,
-        quantity:quantity 
+			url: '/change-product-quantity',
+			data: {
 
-    },
-    method:'post',
-    success:(response)=>{
-        if(response.removeProduct){
-            alert("Product Removed from cart")
-            location.reload()
-        }else{
-			console.log(response)
-            document.getElementById(productId).innerHTML=quantity+count
-			document.getElementById('total1').innerHTML=response.total
-			document.getElementById('total').innerHTML=response.GrandTotal
-        }
+				user: userId,
+				cart: cartId,
+				product: productId,
+				count: count,
+				quantity: quantity
 
-    }
+			},
+			method: 'post',
+			success: (response) => {
+				if (response.removeProduct) {
+					alert("Product Removed from cart")
+					location.reload()
+				} else {
+					console.log(response)
+					document.getElementById(productId).innerHTML = quantity + count
+					document.getElementById('total1').innerHTML = response.total
+					document.getElementById('total').innerHTML = response.GrandTotal
+				}
 
-})
-}
+			}
+
+		})
+	}
 
 
-function removeFromCart(cartId,productId){
-	alert("Not workin"+cartId+' '+productId)
-$.ajax({
-    
-    url:'/remove-from-cart',
-	method:'post',
-    data:{    
-        cart:cartId,
-        product:productId,
-    },
-    success:(response)=>{
-        if(response.removeProduct){
-            alert("Product Removed from cart")
-            location.reload()
-        }else{
-            document.getElementById(productId).innerHTML=quantity+count
-        }
+	function removeFromCart(cartId, productId) {
+		alert("Not workin" + cartId + ' ' + productId)
+		$.ajax({
 
-    }
-})
+			url: '/remove-from-cart',
+			method: 'post',
+			data: {
+				cart: cartId,
+				product: productId,
+			},
+			success: (response) => {
+				if (response.removeProduct) {
+					alert("Product Removed from cart")
+					location.reload()
+				} else {
+					document.getElementById(productId).innerHTML = quantity + count
+				}
 
-}
+			}
+		})
 
-	
+	}
+	$('#coupon-check').submit((e) => {
+		e.preventDefault()
+		$.ajax({
+			url: '/apply-coupon',
+			data: $('#coupon-check').serialize(),
+			method: 'post',
+			success: (response) => {
+				if (response.status == 'true') {
+					location.href = '/cart'
+				} else if (response.status == 'already used') {
+					document.getElementById('couponerr').innerHTML = 'Alredy Used'
+				} else if (response.status == 'Only one') {
+					document.getElementById('couponerr').innerHTML = 'Only one coupon can be Applied'
+				} else {
+					document.getElementById('couponerr').innerHTML = 'Invalid Coupon'
+				}
+
+			}
+		})
+	})
+
+
 </script>
