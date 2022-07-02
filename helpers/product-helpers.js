@@ -495,6 +495,7 @@ module.exports = {
     },
     addCoupon: (coupon) => {
         console.log(coupon);
+        coupon.DiscountPrice = parseInt(coupon.DiscountPrice);
         db.get().collection('coupon').insertOne(coupon).then((data) => {
             console.log(data);
             
@@ -738,7 +739,7 @@ module.exports = {
                     db.get().collection(collection.CART_COLLECTION).updateOne({user:objectId(userId)},{
                         $set:{
                             coupon:code,
-                            coupondiscount:check.offer
+                            coupondiscount:check.DiscountPrice
                         }
                     })
                     db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userId)},{

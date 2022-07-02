@@ -192,13 +192,13 @@ router.get('/cart',verifylogin,async (req, res) => {
   let checkCart=await productHelpers.checkCartcoupon(req.session.user._id)
   if(checkCart.coupon){
      netTotal=GrandTotal-checkCart.coupondiscount
-
-
-
+     couponDis=checkCart.coupondiscount
   }else{
     netTotal=0
+    couponDis=0
+
   }
-  res.render('cart',{ user: true, loged,user:req.session.user,products,GrandTotal,totalValue,netTotal})
+  res.render('cart',{ user: true, loged,user:req.session.user,products,GrandTotal,totalValue,netTotal,couponDis})
   
 })
  router.get('/add-to-cart/:id',verifylogin,async(req,res)=>{
@@ -268,14 +268,23 @@ router.get('/checkout',verifylogin,async (req, res) => {
   let loged = req.session.user
   let total=await productHelpers.getTotalAmount(req.session.user._id)
   let GrandTotal=total+120
-  res.render('checkout', { user: true, loged ,total,GrandTotal,user:req.session.user})
+  let checkCart=await productHelpers.checkCartcoupon(req.session.user._id)
+  if(checkCart.coupon){
+     netTotal=GrandTotal-checkCart.coupondiscount
+     couponDis=checkCart.coupondiscount
+
+
+
+  }else{
+    netTotal=0
+  }
+  res.render('checkout', { user: true, loged ,total,GrandTotal,user:req.session.user,netTotal,couponDis})
 })
 router.post('/checkout',async(req,res)=>{
-  let Touser=await productHelpers.addCouponTouser(req.body.userId,req.body.couponId)
   let products=await productHelpers. getCartProductList(req.body.userId)
   let GrandTotal=await productHelpers.getTotalAmount(req.body.userId)
   let total=GrandTotal+120
-  productHelpers.placeOrder(req.body,products,total,Touser).then((orderId)=>{
+  productHelpers.placeOrder(req.body,products,total).then((orderId)=>{
     console.log(orderId); 
     req.session.orderid=orderId
 
