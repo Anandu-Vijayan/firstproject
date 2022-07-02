@@ -180,9 +180,9 @@
 			success: (response) => {
 				if (response.status == 'true') {
 					location.href = '/cart'
-				} else if (response.status == 'already used') {
+				} else if (response.status == 'Already Used') {
 					document.getElementById('couponerr').innerHTML = 'Alredy Used'
-				} else if (response.status == 'Only one') {
+				} else if (response.status == 'only one') {
 					document.getElementById('couponerr').innerHTML = 'Only one coupon can be Applied'
 				} else {
 					document.getElementById('couponerr').innerHTML = 'Invalid Coupon'
