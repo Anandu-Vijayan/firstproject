@@ -271,56 +271,101 @@ router.get('/checkout',verifylogin,async (req, res) => {
   let checkCart=await productHelpers.checkCartcoupon(req.session.user._id)
   if(checkCart.coupon){
      netTotal=GrandTotal-checkCart.coupondiscount
+     req.session.netTotal=netTotal
      couponDis=checkCart.coupondiscount
 
 
 
   }else{
     netTotal=0
+    req.session.netTotal=0
   }
   res.render('checkout', { user: true, loged ,total,GrandTotal,user:req.session.user,netTotal,couponDis})
 })
 router.post('/checkout',async(req,res)=>{
+
   let products=await productHelpers. getCartProductList(req.body.userId)
   let GrandTotal=await productHelpers.getTotalAmount(req.body.userId)
   let total=GrandTotal+120
-  productHelpers.placeOrder(req.body,products,total).then((orderId)=>{
-    console.log(orderId); 
-    req.session.orderid=orderId
-
-    let conform={ID:orderId,codSuccess:'COD'}
-    console.log("jasbcasxcbhxzchbhzclvxcbx");
-    console.log(req.body);
-    if(req.body['paymentmethod']=='COD'){
-      console.log('6565656565656565')
-      console.log(conform.codSuccess)
+  if(req.session.netTotal){
+    productHelpers. placeOrder(req.body,products,req.session.netTotal).then((orderId)=>{
+      console.log(orderId); 
+      req.session.orderid=orderId
+  
+      let conform={ID:orderId,codSuccess:'COD'}
+      console.log("jasbcasxcbhxzchbhzclvxcbx");
+      console.log(req.body);
+      if(req.body['paymentmethod']=='COD'){
+        console.log('6565656565656565')
+        console.log(conform.codSuccess)
+        
+        res.json(conform)  
+  
+      }else if(req.body['paymentmethod']=='OnlinePyament'){
+        console.log('mutheeeeeeeee');
+        productHelpers.generateRazorpay(orderId,req.session.netTotal).then((response)=>{
+          console.log(response);
+          response.codSuccess='razorpay'
+          response.ID=orderId
+          res.json(response)
+  
+        })
+  
+      }else{
+        productHelpers.generatePaypal(orderId,req.session.netTotal).then((payment)=>{
+          console.log(response);
+          response.ID=orderId
+          res.json(payment)
+        })
+      }
       
-      res.json(conform) 
-
-    }else if(req.body['paymentmethod']=='OnlinePyament'){
-      console.log('mutheeeeeeeee');
-      productHelpers.generateRazorpay(orderId,total).then((response)=>{
-        console.log(response);
-        response.codSuccess='razorpay'
-        response.ID=orderId
-        res.json(response)
-
-      })
-
-    }else{
-      productHelpers.generatePaypal(orderId,total).then((payment)=>{
-        console.log(response);
-        response.ID=orderId
-        res.json(payment)
-      })
-    }
     
+    })
+    console.log(req.body);
   
-  })
-  console.log(req.body);
+    
+   
 
+  }else{
+    productHelpers. placeOrder(req.body,products,total).then((orderId)=>{
+      console.log(orderId); 
+      req.session.orderid=orderId
   
- 
+      let conform={ID:orderId,codSuccess:'COD'}
+      console.log("jasbcasxcbhxzchbhzclvxcbx");
+      console.log(req.body);
+      if(req.body['paymentmethod']=='COD'){
+        console.log('6565656565656565')
+        console.log(conform.codSuccess)
+        
+        res.json(conform) 
+  
+      }else if(req.body['paymentmethod']=='OnlinePyament'){
+        console.log('mutheeeeeeeee');
+        productHelpers.generateRazorpay(orderId,total).then((response)=>{
+          console.log(response);
+          response.codSuccess='razorpay'
+          response.ID=orderId
+          res.json(response)
+  
+        })
+  
+      }else{
+        productHelpers.generatePaypal(orderId,total).then((payment)=>{
+          console.log(response);
+          response.ID=orderId
+          res.json(payment)
+        })
+      }
+      
+    
+    })
+    console.log(req.body);
+  
+    
+   
+  }
+  
 })
 router.get('/success',async (req, res) => {
   let total=await productHelpers.getTotal(req.session.orderid)
