@@ -104,7 +104,11 @@
 							<hr>
 							<p class="d-flex total-price">
 								<span>Total</span>
+								{{#if netTotal}}
 								<span>Rs.{{netTotal}}</span>
+								{{else}}
+								<span>Rs.{{GrandTotal}}</span>
+								{{/if}}
 							</p>
 						</div>
 					</div>

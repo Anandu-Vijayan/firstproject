@@ -755,10 +755,16 @@ module.exports = {
         })
     },
     checkCartcoupon:(userId)=>{
-        return new Promise((resolve,reject)=>{
-            db.get().collection(collection.CART_COLLECTION).findOne({user:objectId(userId)}).then((result)=>{
-                resolve(result)
-            })
+        return new Promise(async(resolve,reject)=>{
+        let cart=  await db.get().collection(collection.CART_COLLECTION).findOne({user:objectId(userId)})
+        if(cart){
+            resolve(cart)
+
+        }else{
+            resolve(0)
+        }
+               
+            
         })
     }
     
