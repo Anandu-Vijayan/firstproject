@@ -766,6 +766,91 @@ module.exports = {
                
             
         })
+    },
+    getAllPaymentAmount:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let AllPayment = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $group:{
+                        _id:null,
+                        totals:{
+                            $sum:"$Amount"
+                            
+                        }
+                    },
+                }
+            ]).toArray()
+            console.log(AllPayment)
+            resolve(AllPayment[0].totals)
+        })
+    },
+    getAllRazorpayPayment:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let RazorpayPayment= await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match:{
+                         PaymentMethod
+                         :'OnlinePyament'
+                    }
+                },
+                {
+                    $group:{
+                        _id:null,
+                        totals:{
+                            $sum:"$Amount"
+                        }
+                    }
+                }
+            ]).toArray()
+            console.log(RazorpayPayment);
+            resolve(RazorpayPayment[0].totals)
+        })
+    },
+    getAllPaypalPayment:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let PaypalPayment= await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match:{
+                        PaymentMethod
+                        :'Paypal'
+                    }
+                },
+                {
+                    $group:{
+                        _id:null,
+                        totals:{
+                            $sum:"$Amount"
+                        }
+                    }
+                }
+            ]).toArray()
+            console.log(PaypalPayment);
+            resolve(PaypalPayment[0].totals)
+        })
+    },
+    getAllCodPayment:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let CodPayment= await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match:{
+                        PaymentMethod
+                        :'COD'
+
+                    }
+                },
+                {
+                    $group:{
+                        _id:null,
+                        totals:{
+                            $sum:"$Amount"
+                        }
+                    }
+
+                }
+            ]).toArray()
+            console.log(CodPayment);
+            resolve(CodPayment[0].totals)
+        })
     }
-    
+
 } 

@@ -25,7 +25,22 @@ adminCred={
 router.get('/home',(req,res)=>{
   console.log(req.session.adminlog);
   if(req.session.adminlog==true){
-  res.render('adminpanal/admin',{admin:true})
+    let total =productHelpers.getAllPaymentAmount().then((Amount)=>{
+    let OnlinePyament=productHelpers.getAllRazorpayPayment().then((razorpay)=>{
+    let PayPalPyament=productHelpers.getAllPaypalPayment().then((paypal)=>{
+    let CodPyament=productHelpers.getAllCodPayment().then((Cod)=>{
+
+      res.render('adminpanal/admin',{admin:true,Amount,razorpay,paypal,Cod})
+    })
+      
+
+    })
+      
+
+    })
+      
+    })
+  
   }else{
     res.redirect('/admin',{adminErr:req.session.adminErr})
     res.session.adminErr=null
