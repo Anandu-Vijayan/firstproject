@@ -54,16 +54,16 @@
 							<td>Rs:{{this.product.Price}}/-</td>
 
 							<td>
-								<button class="cart-item-count mr-3"
+								<button class="btn btn-primary py-1"
 									onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
 								<span id="{{this.product._id}}">{{this.quantity}}</span>
-								<button class="cart-item-count ml-3"
+								<button class="btn btn-primary py-1"
 									onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
 							</td>
 							<td>Rs:{{this.product.Price}}/-</td>
 							<td>
-								<button class="cart-item-count mr-3"
-									onclick="removeFromCart('{{this._id}}','{{this.product._id}}')">X</button>
+								<button class="btn btn-primary py-3 px-4"
+									onclick="removeFromCart('{{this._id}}','{{this.product._id}}')">Remove</button>
 
 							</td>
 						</tr>
@@ -99,8 +99,10 @@
 						<span>Rs:120.00/-</span>
 					</p>
 					<p class="d-flex">
-						<span>Coupon Discount</span>
+						<span>Coupon Discount:</span>
 						<span>Rs:{{couponDis}} /-</span>
+						<button  type="button" class="btn btn-danger m-1">x</button>
+						
 					</p>
 
 					<hr>

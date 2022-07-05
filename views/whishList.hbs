@@ -60,7 +60,8 @@
 							{{!-- <td>{{this.product.Price }}</td> --}}
 							<td>
                                 {{this.products._id}}
-								<button class="cart-item-count mr-3" onclick="removeFromWishList('{{this._id}}','{{this.product._id}}')">X</button>
+
+								<button class="btn btn-primary py-3 px-4" onclick="removeFromWishList('{{this._id}}','{{this.product._id}}' )">Remove</button>
 								
 							</td>
 							<td>	<p class="text-center"><a href="/add-to-cart/{{product._id}}" class="btn btn-primary py-3 px-4">Add to cart</a>
