@@ -128,6 +128,19 @@ router.get('/edp',(req,res,next)=>{
   res.redirect("/admin")
 }
 })
+router.get('/ordersList',(req,res)=>{
+if(req.session.adminlog){
+  productHelpers.getAllOrders().then((orderss)=>{
+    res.render('adminpanal/ordersList',{admin:true,orderss})
+    console.log("ggggggggggggggggggg");
+  }) 
+
+}else{
+  res.redirect("/admin")
+}
+  
+
+})
 router.post('/addp',(req,res)=>{
   if(req.session.adminlog){
    console.log(req.body.adminlog);

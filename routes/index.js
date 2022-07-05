@@ -449,14 +449,7 @@ router.get('/cancelOrder/:id',(req,res)=>{
 
 })
 
-router.get('/admin/ordersList',(req,res)=>{
 
-  productHelpers.getAllOrders().then((orderss)=>{
-  res.render('adminpanal/ordersList',{admin:true,orderss})
-  console.log("ggggggggggggggggggg");
-}) 
-
-})
 router.get('/wishlist',verifylogin,async(req, res) => {
   let loged = req.session.user
   console.log("sdasdfuksgdusdfgufdguidfiffsdf55555555555555555555555555555555555555");
