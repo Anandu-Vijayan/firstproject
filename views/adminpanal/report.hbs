@@ -1,0 +1,83 @@
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        {{!-- <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>Users</h4> --}}
+        <!-- Basic Bootstrap Table -->
+        <div class="card">
+            <h5 class="card-header">Table Basic</h5>
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-dark">Date</th>
+                            <th class="text-dark">Name</th>
+                            <th class="text-dark">Email</th>
+                            {{!-- <th class="text-dark">Address</th> --}}
+                            <th class="text-dark">Pincode</th>
+                            {{!-- <th class="text-dark">Mobile</th> --}}
+                            <th class="text-dark">Amount</th>
+                            <th class="text-dark">Payment type</th>
+                            <th class="text-dark">Qty</th>
+                            <th class="text-dark">Products</th>
+                            <th class="text-dark">Status</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        {{#each order}}
+                        <tr>
+                            <td>{{this.date}}</td>
+                            <td>{{this.deliveryDetails.Name}}</td>
+                            <td>{{this.deliveryDetails.Email}}</td>
+                            <td>{{this.deliveryDetails.Pincode}}</td>
+                            <td>{{this.Amount}}/-</td>
+                            <td>{{this.PaymentMethod}}</td>
+                            <td>{{this.quantity}}</td>
+                            <td>{{this.product.Name}}</td>
+
+
+
+                            <td>
+                                {{#if this.status }}
+                                <span class="badge bg-label-primary me-1">Deliverd</span>
+                                {{else}}
+                                <span class="badge bg-label-danger me-1">Canceled</span>
+                                {{/if}}
+                            </td>
+                           
+
+                        </tr>
+                    </tbody>
+                    {{/each}}
+                </table>
+            </div>
+        </div>
+        <!--/ Basic Bootstrap Table -->
+        <!-- Footer -->
+
+
+        <!-- Core JS -->
+        <!-- build:js assets/vendor/js/core.js -->
+        <script src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
+        <script src="/admin/assets/vendor/libs/popper/popper.js"></script>
+        <script src="/admin/assets/vendor/js/bootstrap.js"></script>
+        <script src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+        <script src="/admin/assets/vendor/js/menu.js"></script>
+        <!-- endbuild -->
+
+        <!-- Vendors JS -->
+
+        <!-- Main JS -->
+        <script src="/admin/assets/js/main.js"></script>
+
+        <!-- Page JS -->
+
+        <!-- Place this tag in your head or just before your close body tag. -->
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+        </body>
+
+        </html>

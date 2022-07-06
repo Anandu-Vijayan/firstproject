@@ -75,6 +75,20 @@ router.get('/table',(req,res)=>{
 
   
 })
+router.get('/Report',(req,res)=>{
+  if(req.session.adminlog){
+    productHelpers. getAllReport().then((order)=>{
+      console.log("adshhhhhhhhhhhhhhhh55555555555555555555555555555555555555555555555555555555555555555");
+      console.log(order);
+      res.render('adminpanal/report',{admin:true,order})
+
+    })
+   
+  }else{
+    res.redirect("/admin")
+  }
+})
+
 router.get('/block-user/:id',(req,res)=>{
   userHelpers.blockUser(req.params.id).then((block)=>{
     res.redirect('/admin/table')
@@ -283,4 +297,6 @@ router.get('/delete-coupon/:id',(req,res)=>{
   }
 
 })
+router
+
 module.exports = router;

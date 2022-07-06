@@ -484,6 +484,51 @@ module.exports = {
             })
 
         })
+
+    },
+    getAllReport:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let sales= await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $unwind:'$products'
+                },
+                {
+                    $project: {
+                        item: '$products.item',
+                        quantity: '$products.quantity',
+                        deliveryDetails:'$deliveryDetails',
+                        PaymentMethod:'$PaymentMethod',
+                        Amount:'$Amount',
+                        date:'$date',
+                        status:'$status'
+                        
+
+                        
+             
+
+                    }
+                },
+                {
+                    $lookup: {
+                        from: collection.PRODUCT_COLLECTION,
+                        localField: 'item',
+                        foreignField: '_id',
+                        as: 'product'
+                    }
+
+                },
+                {
+                    $project: {
+                        deliveryDetails:1,Amount:1,date:1,status:1,
+                        PaymentMethod:1, item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                    }
+
+                }
+            ]).toArray()
+            console.log(sales);
+            resolve(sales)
+        })
+
     },
     getAllOrders: () => {
         return new Promise(async (resolve, reject) => {

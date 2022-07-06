@@ -434,6 +434,7 @@ router.get('/User',verifylogin, (req, res) => {
 
   res.render('User', { user: true, loged })
 })
+
 router.get('/contact',verifylogin, (req, res) => {
   let loged = req.session.user
   res.render('contact', { user: true, loged })
@@ -485,17 +486,7 @@ router.post('/verify-Payment',(req,res)=>{
     res.json({status:false,errMsg:''})
   })
 }) 
-router.get ('admin/ordersList',verifylogin,async(req,res)=>{
-  let loged = req.session.user
-  let orders=await productHelpers.getUserOrders(req.session.user._id)
-  
-  
-  res.render('adminpanal/ordersList',{user:req.session.user,user:true,loged,orders})
-  
-    // res.redirect('/login')
-  
-  
-}) 
+
 router.get('/cancelsOrder/:id',(req,res)=>{
   productHelpers.cancelOrderList(req.params.id).then((cancel)=>{
     res.redirect('/admin/ordersList')
