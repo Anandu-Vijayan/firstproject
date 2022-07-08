@@ -274,47 +274,47 @@ module.exports = {
             }
         })
     },
-    getTotalAmount: (userId) => {
-        return new Promise(async (resolve, reject) => {
-            let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
-                {
-                    $match: { user: objectId(userId) }
-                },
-                {
-                    $unwind: '$products'
-                },
-                {
-                    $project: {
-                        item: '$products.item',
-                        quantity: '$products.quantity'
-                    }
-                }, {
-                    $lookup: {
-                        from: collection.PRODUCT_COLLECTION,
-                        localField: 'item',
-                        foreignField: '_id',
-                        as: 'products'
-                    }
-                },
-                {
-                    $project: {
-                        item: 1, quantity: 1, product: { $arrayElemAt: ['$products', 0] }
-                    }
-                },
-                {
-                    $group: {
-                        _id: null,
-                        total: { $sum: { $multiply: ['$product.quantity', '$product.Price'] } }
-                    }
+    // getTotalAmount: (userId) => {
+    //     return new Promise(async (resolve, reject) => {
+    //         let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
+    //             {
+    //                 $match: { user: objectId(userId) }
+    //             },
+    //             {
+    //                 $unwind: '$products'
+    //             },
+    //             {
+    //                 $project: {
+    //                     item: '$products.item',
+    //                     quantity: '$products.quantity'
+    //                 }
+    //             }, {
+    //                 $lookup: {
+    //                     from: collection.PRODUCT_COLLECTION,
+    //                     localField: 'item',
+    //                     foreignField: '_id',
+    //                     as: 'products'
+    //                 }
+    //             },
+    //             {
+    //                 $project: {
+    //                     item: 1, quantity: 1, product: { $arrayElemAt: ['$products', 0] }
+    //                 }
+    //             },
+    //             {
+    //                 $group: {
+    //                     _id: null,
+    //                     total: { $sum: { $multiply: ['$product.quantity', '$product.Price'] } }
+    //                 }
 
-                }
+    //             }
 
-            ]).toArray()
-            console.log(total);
-            resolve(total)
-        })
+    //         ]).toArray()
+    //         console.log(total);
+    //         resolve(total)
+    //     })
 
-    },
+    // },
     removeFromCart: (details) => {
         return new Promise((resolve, reject) => {
 
@@ -386,27 +386,29 @@ module.exports = {
 
     },
 
-    placeOrder: (order, product, total) => {
+    placeOrder: (address,product,total,paymentmethod) => {
         return new Promise((resolve, reject) => {
-            console.log(total, product, order);
+            console.log("777777777777777777777777777777777777777");
+            console.log(paymentmethod);
+            console.log(address); 
+            console.log(total, product,address);
+            
             console.log("kakakakkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkksdsadasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            let status = order.paymentmethod === 'COD' ? 'Placed' : 'pending'
+            let status =paymentmethod === 'COD' ? 'Placed' : 'pending'
             var date = new Date()
             var month = date.getUTCMonth() + 1
             var day = date.getUTCDate()
             var year = date.getUTCFullYear()
             let orderObj = {
                 deliveryDetails: {
-                    Name: order.Name,
-                    Address: order.Place,
-                    Street: order.Street,
-                    City: order.City,
-                    Pincode: order.Pincode,
-                    Mobile: order.Mobile,
-                    Email: order.Email,
+                    Name: address.address.First,
+                    Address: address.address.Addrers,
+                    Pincode: address.address.Pincode,
+                    Mobile: address.address.Phone,
+                    Email: address.address.Email,
                 },
-                userId: objectId(order.userId),
-                PaymentMethod: order.paymentmethod,
+                userId: objectId(address.userId),
+                PaymentMethod:paymentmethod,
                 products: product,
                 Amount: total,
                 date: day + "/" + month + "/" + year,
@@ -415,7 +417,7 @@ module.exports = {
             }
 
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
-                db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(order.userId) })
+                db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(address.userId) })
                 resolve(response.insertedId)
             })
 
@@ -423,6 +425,7 @@ module.exports = {
  
     },
     getCartProductList: (userId) => {
+        
         return new Promise(async (resolve, reject) => {
             let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
             console.log(cart);
@@ -848,7 +851,7 @@ module.exports = {
                 }
             ]).toArray()
             console.log(RazorpayPayment);
-            resolve(RazorpayPayment[0].totals)
+            resolve(RazorpayPayment[0].total)
         })
     },
     getAllPaypalPayment:()=>{
@@ -896,6 +899,40 @@ module.exports = {
             console.log(CodPayment);
             resolve(CodPayment[0].totals)
         })
-    }
+    },
+    addAddress: (address,userId) => {
+        console.log(address);
+        let addId={
+            user:objectId(userId),
+            address:address
+        }
 
-} 
+       
+        db.get().collection('address').insertOne(addId).then((data) => {
+            console.log(data);
+            
+
+
+        })
+    },
+    getAllAddress:(userId)=>{
+        console.log(userId);
+        return new Promise(async(resolve,reject)=>{
+            let addres=await db.get().collection(collection.ADDRESS_COLLECTION).find({user:objectId(userId)}).toArray()
+            console.log(addres);
+            resolve(addres)
+        })
+    },
+    getAddress:(addressId)=>{
+        console.log("555555555555555555555555555555555555555555555555");
+        console.log(addressId);
+        return new Promise(async(resolve,reject)=>{
+            let adde=await db.get().collection(collection.ADDRESS_COLLECTION).findOne({_id:objectId(addressId)})
+            console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            console.log(adde);
+            resolve(adde)
+        })
+
+    }
+}
+

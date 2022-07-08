@@ -187,8 +187,12 @@ router.get('/cart',verifylogin,async (req, res) => {
   let products=await productHelpers.getCartProducts(req.session.user._id)
   console.log(req.session.user);
   let totalValue=await productHelpers.getTotalAmount(req.session.user._id)
+  console.log("88888888888888888888888888888888888888888888888888888888");
+  console.log(totalValue);
   console.log(products); 
   let GrandTotal=totalValue+120
+  console.log("********************************************************************************");
+  console.log(GrandTotal);
   let checkCart=await productHelpers.checkCartcoupon(req.session.user._id)
   if(checkCart.coupon){
      netTotal=GrandTotal-checkCart.coupondiscount
@@ -268,27 +272,51 @@ router.get('/checkout',verifylogin,async (req, res) => {
   let loged = req.session.user
   let total=await productHelpers.getTotalAmount(req.session.user._id)
   let GrandTotal=total+120
+  console.log("#################################################");
+  console.log(GrandTotal);
   let checkCart=await productHelpers.checkCartcoupon(req.session.user._id)
+  let addresses= await productHelpers.getAllAddress(req.session.user._id)
+  console.log('hooooooooooooooooooooo');
+  console.log(addresses);
   if(checkCart.coupon){
      netTotal=GrandTotal-checkCart.coupondiscount
      req.session.netTotal=netTotal
+     console.log("///////////////////////////////////////////////////////////////////////");
+     console.log(req.session.netTotal);
      couponDis=checkCart.coupondiscount
 
 
 
   }else{
     netTotal=0
+    
     req.session.netTotal=0
   }
-  res.render('checkout', { user: true, loged ,total,GrandTotal,user:req.session.user,netTotal,couponDis})
+  res.render('checkout', { user: true, loged ,total,GrandTotal,user:req.session.user,netTotal,couponDis,addresses})
 })
 router.post('/checkout',async(req,res)=>{
-
-  let products=await productHelpers. getCartProductList(req.body.userId)
-  let GrandTotal=await productHelpers.getTotalAmount(req.body.userId)
+  console.log("8888888888888888888888888888888888888888888888888");
+  console.log(req.body);
+  let products=await productHelpers.getCartProductList(req.session.user._id)
+  let GrandTotal=await productHelpers.getTotalAmount(req.session.user._id)
+  let address=await productHelpers.getAddress(req.body.Address)
+  console.log("8888888888*************************8888");
+  
+  
   let total=GrandTotal+120
+  console.log(GrandTotal);
+  console.log("0000000000000000000000000000000000000");
+ 
+  console.log(req.session.netTotal);
+  console.log("989579798589756759569666696++5556+5+5+5");
+  
   if(req.session.netTotal){
-    productHelpers. placeOrder(req.body,products,req.session.netTotal).then((orderId)=>{
+    console.log("999999999999999999999999999999999999999999");
+    console.log(address);
+    productHelpers. placeOrder(address,products,req.session.netTotal,req.body.paymentmethod).then((orderId)=>{
+
+      console.log("5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555");
+      console.log(req.body);
       console.log(orderId); 
       req.session.orderid=orderId
   
@@ -310,7 +338,7 @@ router.post('/checkout',async(req,res)=>{
           res.json(response)
   
         })
-  
+   
       }else{
         productHelpers.generatePaypal(orderId,req.session.netTotal).then((payment)=>{
           console.log(response);
@@ -318,7 +346,7 @@ router.post('/checkout',async(req,res)=>{
           res.json(payment)
         })
       }
-      
+       
     
     })
     console.log(req.body);
@@ -327,7 +355,13 @@ router.post('/checkout',async(req,res)=>{
    
 
   }else{
-    productHelpers. placeOrder(req.body,products,total).then((orderId)=>{
+    productHelpers. placeOrder(address,products,total,req.body.paymentmethod).then((orderId)=>{
+      console.log("4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444");
+      console.log(address);
+      console.log(req.body.Address);
+      console.log(req.body);
+      console.log("000000000000000000000000000000000000000000000000000000");
+      console.log(products);
       console.log(orderId); 
       req.session.orderid=orderId
   
@@ -472,8 +506,29 @@ router.post("/remove-from-Wishlist",(req,res)=>{
     console.log("workinkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
   }) 
 })
+router.get('/address',verifylogin,(req,res)=>{
+  let loged=req.session.user
+
+  res.render('address',{user:true,loged})
+})
+router.post('/address',async(req,res)=>{
+  console.log("sdfdd8888888888888888888888888888888888888888888888888888888888888888888888888888");
+  console.log(req.body);
+  if(req.session.user){
+    productHelpers.addAddress(req.body,req.session.user._id)
+      res.redirect('/address')
+
+
+  }else{
+    res.redirect('/')
+  }
+ 
+  
+})
+
 router.post('/verify-Payment',(req,res)=>{
   console.log("pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
+x
   productHelpers.verifyPayment(req.body).then(()=>{
     console.log(req.body);
     productHelpers.chagePayementStatus(req.body['order[receipt]']).then(()=>{

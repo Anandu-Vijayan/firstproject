@@ -17,137 +17,155 @@
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-xl-10 ftco-animate">
-				<form   id="checkout-form" class="checkout-form">
-					<p><a href="#" class="btn btn-primary py-3 px-4 mr-4">Add New Address </a></p>
+				<form id="checkout-form" class="checkout-form">
+					<p><a href="/address" class="btn btn-primary py-3 px-4 mr-4">Add New Address </a></p>
 					<h3 class="mb-4 billing-heading">Billing Details</h3>
-					<div class="row align-items-end">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="firstname">Firt Name</label>
-								<input type="text" id="Name" name="Name" class="form-control" onkeyup="validatName()" placeholder="First Name">
-								<span id="name" class="text-danger"></span>
+					<div class="card" style="width: 18rem;">
+						<div>
+							<div style=" background-color: #e5ecee;width: 730px;height: 300px;overflow:auto;"
+								class="px-5">
+								<h4 class="pt-3">Choose a Address</h4>
+								<div class="col-md-12">
+									<div class="radio">
+										
+
+										
+										<hr>
+										<div class="d-flex ">
+
+											<div>
+												<hr>
+											</div>
+											{{#each addresses}}
+											<table>
+												<thead>
+													<tr>
+														<td><input type="radio" value="{{this._id}}" name="Address"></td>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+												</thead>
+
+												<tbody>
+													
+													<tr>
+														<td>Name </td>
+														<td class=" px-2">:</td>
+														<td class=" px-3">{{this.address.First}} {{This.address.Last}}</td>
+													</tr>
+													<tr>
+														<td>Email </td>
+														<td class=" px-2">:</td>
+														<td class="px-3">{{this.address.Email}}</td>
+													</tr>
+													<tr>
+														<td>Mobile no </td>
+														<td class=" px-2">:</td>
+														<td class="px-3">{{this.address.Phone}}</td>
+													</tr>
+													<tr>
+														<td>Address </td>
+														<td class=" px-2">:</td>
+														<td class="px-3">{{this.address.Addrers}}</td>
+													</tr>
+													{{!-- <tr>
+														<td>City </td>
+														<td class=" px-2">:</td>
+														<td class="px-3">{{}}</td>
+													</tr> --}}
+													<tr>
+														<td>Pincode </td>
+														<td class=" px-2">:</td>
+														<td class=" px-3">{{this.address.Pincode}}</td>
+													</tr>
+
+													<div>
+														<hr>
+													</div>
+													
+												</tbody>
+												
+											</table>
+
+
+										</div>
+											{{/each}}
+										
+									</div>
+									</label>
+								</div>
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="lastname">Last Name</label>
-								<input type="text" id="Last_Name" name="Last name"  class="form-control" onkeyup="validatLastname()" placeholder="Last Name">
-								<span id="nameerr" class="text-danger"></span>
-							</div>
-						</div>
-					<div class="col-md-6">
-							<div class="form-group">
-								<label for="lastname">Place</label>
-								<input type="text" id="Place" name="Place"  class="form-control" placeholder="Place">
-							</div>
-						</div>
-						<div class="w-100"></div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="streetaddress">Street Address</label>
-								<input type="text" id="Street" name="Street" class="form-control" placeholder="House number and street name">
-							</div>
-						</div>
-						{{!-- <div class="col-md-6">
-							<div class="form-group">
-								<input type="text" class="form-control"
-									placeholder="Appartment, suite, unit etc: (optional)">
-							</div>
-						</div> --}}
-						<div class="w-100"></div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="towncity">Town / City</label>
-								<input type="text" id="City" name="City" class="form-control" placeholder="Town/City">
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="postcodezip">Pincode</label>
-								<input type="text" id="Pincode" name="Pincode" class="form-control" placeholder="Pincode">
-							</div>
-						</div>
-						<div class="w-100"></div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="phone">Phone</label>
-								<input type="text" id="Mobile" name="Mobile" class="form-control" placeholder="Phone number">
-								<input type="text" name="userId" id="" value="{{user._id}}" hidden>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="emailaddress">Email Address</label>
-								<input type="text" id="Email" name="Email" class="form-control" placeholder="Email">
-							</div>
-						</div>
-						
-				
 					</div>
-				
+					
 
 
 
-				<div class="row mt-5 pt-3 d-flex">
-					<div class="col-md-6 d-flex">
-						<div class="cart-detail cart-total p-3 p-md-4">
-							<h3 class="billing-heading mb-4">Cart Total</h3>
-							<p class="d-flex">
-								{{!-- <span>Subtotal</span>
-								<span >{{total}}</span>
-							</p>
-							<p class="d-flex">
-								<span>Delivery</span>
-								<span>120.00</span>
-							</p>
-							 --}}
-							<hr>
-							<p class="d-flex total-price">
-								<span>Total</span>
-								{{#if netTotal}}
-								<span>Rs.{{netTotal}}</span>
-								{{else}}
-								<span>Rs.{{GrandTotal}}</span>
-								{{/if}}
-							</p>
+					<div class="row mt-5 pt-3 d-flex">
+						<div class="col-md-6 d-flex">
+							<div class="cart-detail cart-total p-3 p-md-4">
+								<h3 class="billing-heading mb-4">Cart Total</h3>
+								<p class="d-flex">
+									{{!-- <span>Subtotal</span>
+									<span>{{total}}</span>
+								</p>
+								<p class="d-flex">
+									<span>Delivery</span>
+									<span>120.00</span>
+								</p>
+								--}}
+								<hr>
+								<p class="d-flex total-price">
+									<span>Total</span>
+									{{#if netTotal}}
+									<span>Rs.{{netTotal}}</span>
+									{{else}}
+									<span>Rs.{{GrandTotal}}</span>
+									{{/if}}
+								</p>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="cart-detail p-3 p-md-4">
+								<h3 class="billing-heading mb-4">Payment Method</h3>
+								<div class="form-group">
+									<div class="col-md-12">
+										<div class="radio">
+											<label><input type="radio" name="paymentmethod" value="COD"
+													class="mr-2">COD</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										<div class="radio">
+											<label><input type="radio" name="paymentmethod" value="OnlinePyament"
+													class="mr-2">Online Payment</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										<div class="radio">
+											<label><input type="radio" name="paymentmethod" value="Paypal"
+													class="mr-2">Paypal</label>
+										</div>
+									</div>
+								</div>
+								{{!-- <div class="form-group">
+									<div class="col-md-12">
+										<div class="checkbox">
+											<label><input type="checkbox" value="" class="mr-2"> I have read and accept
+												the
+												terms and conditions</label>
+										</div>
+									</div>
+								</div> --}}
+								<button type="submit" class="btn btn-success">PLACE ORDER</button>
+							</div>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="cart-detail p-3 p-md-4">
-							<h3 class="billing-heading mb-4">Payment Method</h3>
-							<div class="form-group">
-								<div class="col-md-12">
-									<div class="radio">
-										<label><input type="radio" name="paymentmethod" value="COD" class="mr-2">COD</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-md-12">
-									<div class="radio">
-										<label><input type="radio" name="paymentmethod"  value="OnlinePyament" class="mr-2">Online Payment</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-md-12">
-									<div class="radio">
-										<label><input type="radio" name="paymentmethod" value="Paypal" class="mr-2">Paypal</label>
-									</div>
-								</div>
-							</div>
-							{{!-- <div class="form-group">
-								<div class="col-md-12">
-									<div class="checkbox">
-										<label><input type="checkbox" value="" class="mr-2"> I have read and accept the
-											terms and conditions</label>
-									</div>
-								</div>
-							</div> --}}
-							<button type="submit" class="btn btn-success" >PLACE ORDER</button>
-						</div>
-					</div>
-				</div>
 			</div> <!-- .col-md-8 -->
 		</div>
 	</div>
@@ -156,27 +174,27 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
-	$("#checkout-form").submit((e)=>{
+	$("#checkout-form").submit((e) => {
 		e.preventDefault()
 		$.ajax({
-			url:"/checkout",
-			method:'post',
-			data:$('#checkout-form').serialize(),
-			success:(response)=>{
-				if(response.codSuccess=='COD'){
+			url: "/checkout",
+			method: 'post',
+			data: $('#checkout-form').serialize(),
+			success: (response) => {
+				if (response.codSuccess == 'COD') {
 					console.log('555555555555555555555555555')
-					location.href="/order-success"
-				}else if(response.codSuccess=='razorpay'){
+					location.href = "/order-success"
+				} else if (response.codSuccess == 'razorpay') {
 					razorpayPayment(response)
 
-				}else{
+				} else {
 					alert("Paypallllllllllll")
-					  for(let i = 0;i < response.links.length;i++){
-                   if(response.links[i].rel === 'approval_url'){
-                     location.href=response.links[i].href;
-                   }
-                   }
-					
+					for (let i = 0; i < response.links.length; i++) {
+						if (response.links[i].rel === 'approval_url') {
+							location.href = response.links[i].href;
+						}
+					}
+
 				}
 				alert("Let's Go")
 			}
@@ -184,60 +202,60 @@
 
 		})
 	})
-	function razorpayPayment(order){
+	function razorpayPayment(order) {
 		alert("Are You ready For Payment")
 		var options = {
-    "key": "rzp_test_LzENomul3uevEZ", // Enter the Key ID generated from the Dashboard
-    "amount":order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-    "currency": "INR",
-    "name": "Magical Spirits",
-    "description": "Test Transaction",
-    "image": "https://example.com/your_logo",
-    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-    "handler": function (response){
-       
+			"key": "rzp_test_LzENomul3uevEZ", // Enter the Key ID generated from the Dashboard
+			"amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+			"currency": "INR",
+			"name": "Magical Spirits",
+			"description": "Test Transaction",
+			"image": "https://example.com/your_logo",
+			"order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+			"handler": function (response) {
 
-		verifypayment(response,order)
-    },
-    "prefill": {
-        "name": "Magical Spirtis",
-        "email": "admin.magicalspirits@gmail.com",
-        "contact": "+91 9895767256"
-    },
-    "notes": {
-        "address": "Razorpay Corporate Office"
-    },
-    "theme": {
-        "color": "#3399cc"
-    }
-};
-var rzp1 = new Razorpay(options);
-rzp1.open();
+
+				verifypayment(response, order)
+			},
+			"prefill": {
+				"name": "Magical Spirtis",
+				"email": "admin.magicalspirits@gmail.com",
+				"contact": "+91 9895767256"
+			},
+			"notes": {
+				"address": "Razorpay Corporate Office"
+			},
+			"theme": {
+				"color": "#3399cc"
+			}
+		};
+		var rzp1 = new Razorpay(options);
+		rzp1.open();
 	}
-	function verifypayment(payment,order){
+	function verifypayment(payment, order) {
 		console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
 		$.ajax({
-			url:'/verify-Payment',
-			data:{
+			url: '/verify-Payment',
+			data: {
 				payment,
 				order
 
 			},
-			method:'post',
-			success:(response)=>{
+			method: 'post',
+			success: (response) => {
 				console.log("gggggggggggggg")
-				if(response.status){
+				if (response.status) {
 					console.log("llllllllllllll")
-					location.href='/order-success'
-				}else{
+					location.href = '/order-success'
+				} else {
 					console.log("kkkkkkkkkkkkkkkkkkk")
 					alert("payment Failed")
 				}
-				
+
 
 			}
-			
+
 		})
 	}
-	
+
 </script>
