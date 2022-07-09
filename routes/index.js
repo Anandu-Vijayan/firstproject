@@ -190,7 +190,8 @@ router.get('/cart',verifylogin,async (req, res) => {
   let products=await productHelpers.getCartProducts(req.session.user._id)
   console.log(req.session.user);
   let totalValue=await productHelpers.getTotalAmount(req.session.user._id)
-  let cartCount=await productHelpers.getCartCount(req.session.user._id).then((count)=>{})
+  
+  
   let GrandTotal=totalValue+120
   let checkCart=await productHelpers.checkCartcoupon(req.session.user._id)
   if(checkCart.coupon){

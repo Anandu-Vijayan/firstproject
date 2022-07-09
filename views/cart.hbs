@@ -106,6 +106,7 @@
 					</p>
 
 					<hr>
+					{{#if products}}
 					<p class="d-flex total-price">
 						<span>Total</span>
 						{{#if netTotal}}
@@ -114,9 +115,12 @@
 					<h6>Rs.<span id="total">{{GrandTotal}}/-</span></h6></span>
 					</p>
 					{{/if}}
+					{{/if}}
 				</div>
+				{{#if products}}
 				<p class="text-center"><a href="checkout" class="btn btn-primary py-3 px-4">Proceed to Checkout</a>
 				</p>
+				{{/if}}
 			</div>
 		</div>
 	</div>
