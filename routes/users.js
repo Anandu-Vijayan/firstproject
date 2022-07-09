@@ -31,6 +31,8 @@ router.get('/home',(req,res)=>{
     let CodPyament=productHelpers.getAllCodPayment().then((Cod)=>{
 
       res.render('adminpanal/admin',{admin:true,Amount,razorpay,paypal,Cod})
+      console.log("*************************************************************************************");
+      console.log(razorpay);
     })
       
 

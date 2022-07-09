@@ -12,7 +12,7 @@ const { response } = require('express');
 const { validateExpressRequest } = require('twilio/lib/webhooks/webhooks');
 const { redirect } = require('express/lib/response');
 const { payment } = require('paypal-rest-sdk');
-const { checkCartcoupon } = require('../helpers/product-helpers');
+const { checkCartcoupon, getUserOrders } = require('../helpers/product-helpers');
 const client = require("twilio")(config.accountSID, config.authToken);
 
 const verifylogin = (req, res, next) => {
@@ -187,12 +187,8 @@ router.get('/cart',verifylogin,async (req, res) => {
   let products=await productHelpers.getCartProducts(req.session.user._id)
   console.log(req.session.user);
   let totalValue=await productHelpers.getTotalAmount(req.session.user._id)
-  console.log("88888888888888888888888888888888888888888888888888888888");
-  console.log(totalValue);
-  console.log(products); 
+  let cartCount=await productHelpers.getCartCount(req.session.user._id).then((count)=>{})
   let GrandTotal=totalValue+120
-  console.log("********************************************************************************");
-  console.log(GrandTotal);
   let checkCart=await productHelpers.checkCartcoupon(req.session.user._id)
   if(checkCart.coupon){
      netTotal=GrandTotal-checkCart.coupondiscount
@@ -442,15 +438,16 @@ router.get ('/order-success',verifylogin,(req,res)=>{
   
   
 }) 
-
-router.get ('/orders',verifylogin,async(req,res)=>{
+router.get('/orders',verifylogin,(req,res)=>{
   let loged = req.session.user
-  let orders=await productHelpers.getUserOrders(req.session.user._id)
-  
-  
-  res.render('orders',{user:req.session.user,user:true,loged,orders})
-  
-    // res.redirect('/login')
+  console.log(req.session.user._id);
+  productHelpers.getUserOrders(req.session.user._id).then((orders)=>{
+    console.log("000000000000000000000000000000000000000000000000000000");
+    console.log(orders);
+    console.log("888888888888888888888888888888888888888888");
+    res.render('orders',{user:true,orders,loged})
+
+  })
   
   
 })
@@ -537,7 +534,7 @@ x
     })
 
   }).catch((err)=>{
-    console.log(err);
+    console.log(err); 
     res.json({status:false,errMsg:''})
   })
 }) 
