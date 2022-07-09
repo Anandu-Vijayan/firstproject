@@ -22,6 +22,9 @@ const verifylogin = (req, res, next) => {
     res.redirect('/login');
   }
 };
+router.get("/error",(req,res)=>{
+  res.render("error")
+})
 
 /* GET home page. */
 router.get('/',async function (req, res, next) {
@@ -252,6 +255,8 @@ router.get('/product-single/:id',verifylogin, (req, res) => {
   productHelpers.getSingleProduct(req.params.id).then((product)=>{
     res.render('product-single', { user: true, loged,product})
 
+  }).catch(()=>{
+    res.redirect('/error')
   })
  
 })
@@ -525,7 +530,7 @@ router.post('/address',async(req,res)=>{
 
 router.post('/verify-Payment',(req,res)=>{
   console.log("pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
-x
+
   productHelpers.verifyPayment(req.body).then(()=>{
     console.log(req.body);
     productHelpers.chagePayementStatus(req.body['order[receipt]']).then(()=>{
