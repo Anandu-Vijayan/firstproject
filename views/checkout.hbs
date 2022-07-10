@@ -81,15 +81,23 @@
 													</tr>
 
 													<div>
+														
+
 														<hr>
+														
 													</div>
+													
 													
 												</tbody>
 												
+												
 											</table>
-
+											
 
 										</div>
+										<button type="button" class="btn btn-outline-warning">Edit</button>
+												<button type="button" class="btn btn-outline-danger" onclick="removeFromBox('{{this._id}}','{{this.address._id}}')">Delete</button>
+
 											{{/each}}
 										
 									</div>
@@ -256,6 +264,25 @@
 			}
 
 		})
+	}
+	function removeFromBox(addressId){
+		alert("enterd"+addressId)
+		$.ajax({
+			url:'/remove-from-box',
+			method:'post',
+			data:{
+				address:addressId
+			},
+			success:(response)=>{
+				if(response){
+					alert("Address removed")
+					location.reload()
+				}else{
+					alert("not working")
+				}
+			}
+		})
+
 	}
 
 </script>

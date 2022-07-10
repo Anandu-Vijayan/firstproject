@@ -106,6 +106,15 @@ module.exports = {
         })
 
     },
+    removeFromBox:(addressId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.ADDRESS_COLLECTION).deleteOne({_id:objectId(addressId)}).then((response)=>{
+                console.log(response);
+                resolve(response)
+            })
+        })
+
+    },
     getCatogaerysDetails: (catId) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.CATOGAERY_COLLECTION).findOne({ _id: objectId(catId) }).then((catogaerys) => {
@@ -332,6 +341,7 @@ module.exports = {
                 })
         })
     },
+  
     getTotalAmount: (userId) => {
         return new Promise(async (resolve, reject) => {
             let total = await db.get().collection(collection.CART_COLLECTION).aggregate([

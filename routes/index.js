@@ -268,13 +268,20 @@ router.post("/remove-from-cart",(req,res)=>{
     console.log("workingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
   }) 
 })
+router.post("/remove-from-box",(req,res)=>{
+  console.log("555555555555555");
+  productHelpers.removeFromBox(req.body.address).then((response)=>{
+    console.log(req.body.address);
+    res.json(response)
+  })
+})
 router.get('/checkout',verifylogin,async (req, res) => {
-  console.log("000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"); 
+  
   console.log(req.body);
   let loged = req.session.user
   let total=await productHelpers.getTotalAmount(req.session.user._id)
   let GrandTotal=total+120
-  console.log("#################################################");
+  
   console.log(GrandTotal);
   let checkCart=await productHelpers.checkCartcoupon(req.session.user._id)
   let addresses= await productHelpers.getAllAddress(req.session.user._id)
@@ -283,7 +290,7 @@ router.get('/checkout',verifylogin,async (req, res) => {
   if(checkCart.coupon){
      netTotal=GrandTotal-checkCart.coupondiscount
      req.session.netTotal=netTotal
-     console.log("///////////////////////////////////////////////////////////////////////");
+     
      console.log(req.session.netTotal);
      couponDis=checkCart.coupondiscount
 
@@ -297,17 +304,17 @@ router.get('/checkout',verifylogin,async (req, res) => {
   res.render('checkout', { user: true, loged ,total,GrandTotal,user:req.session.user,netTotal,couponDis,addresses})
 })
 router.post('/checkout',async(req,res)=>{
-  console.log("8888888888888888888888888888888888888888888888888");
+
   console.log(req.body);
   let products=await productHelpers.getCartProductList(req.session.user._id)
   let GrandTotal=await productHelpers.getTotalAmount(req.session.user._id)
   let address=await productHelpers.getAddress(req.body.Address)
-  console.log("8888888888*************************8888");
+  
   
   
   let total=GrandTotal+120
   console.log(GrandTotal);
-  console.log("0000000000000000000000000000000000000");
+  
  
   console.log(req.session.netTotal);
   console.log("989579798589756759569666696++5556+5+5+5");
