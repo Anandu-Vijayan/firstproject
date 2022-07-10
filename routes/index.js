@@ -455,6 +455,7 @@ router.get('/orders',verifylogin,(req,res)=>{
   let loged = req.session.user
   console.log(req.session.user._id);
   productHelpers.getUserOrders(req.session.user._id).then((orders)=>{
+    
     console.log("000000000000000000000000000000000000000000000000000000");
     console.log(orders);
     console.log("888888888888888888888888888888888888888888");
