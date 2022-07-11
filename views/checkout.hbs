@@ -22,7 +22,7 @@
 					<h3 class="mb-4 billing-heading">Billing Details</h3>
 					<div class="card" style="width: 18rem;">
 						<div>
-							<div style=" background-color: #e5ecee;width: 730px;height: 300px;overflow:auto;"
+							<div style=" background-color: #e2e6e7;width: 730px;height: 300px;overflow:auto;"
 								class="px-5">
 								<h4 class="pt-3">Choose a Address</h4>
 								<div class="col-md-12">
@@ -52,7 +52,7 @@
 													<tr>
 														<td>Name </td>
 														<td class=" px-2">:</td>
-														<td class=" px-3">{{this.address.First}} {{This.address.Last}}</td>
+														<td class=" px-3">{{this.address.First}} {{this.address.Last}}</td>
 													</tr>
 													<tr>
 														<td>Email </td>
@@ -69,11 +69,7 @@
 														<td class=" px-2">:</td>
 														<td class="px-3">{{this.address.Addrers}}</td>
 													</tr>
-													{{!-- <tr>
-														<td>City </td>
-														<td class=" px-2">:</td>
-														<td class="px-3">{{}}</td>
-													</tr> --}}
+													
 													<tr>
 														<td>Pincode </td>
 														<td class=" px-2">:</td>
@@ -95,7 +91,7 @@
 											
 
 										</div>
-										<button type="button" class="btn btn-outline-warning">Edit</button>
+										
 												<button type="button" class="btn btn-outline-danger" onclick="removeFromBox('{{this._id}}','{{this.address._id}}')">Delete</button>
 
 											{{/each}}
@@ -110,7 +106,7 @@
 
 
 
-					<div class="row mt-5 pt-3 d-flex">
+					<div class="row mt-5 pt-5 d-flex">
 						<div class="col-md-6 d-flex">
 							<div class="cart-detail cart-total p-3 p-md-4">
 								<h3 class="billing-heading mb-4">Cart Total</h3>
