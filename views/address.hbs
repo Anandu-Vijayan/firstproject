@@ -24,14 +24,17 @@
                 <div class="row mb-4">
                     <div class="col">
                         <div class="form-outline">
-                            <input type="text" id="form11Example1" name="First" class="form-control" />
+                            <input type="text" id="Name" name="First" onkeyup="validateName()" class="form-control" />
+                            
                             <label class="form-label"  for="form11Example1">First name</label>
+                            <span id="nameerr" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-outline">
-                            <input type="text" id="form11Example2" name="Last" class="form-control" />
+                            <input type="text" id="Name" name="Last" onkeyup="validateName()" class="form-control" />
                             <label class="form-label"  for="form11Example2">Last name</label>
+                            <span id="nameerr" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -41,30 +44,34 @@
 
                 <!-- Text input -->
                 <div class="form-outline mb-4">
-                    <input type="text" id="form11Example4" name="Addrers"  class="form-control" />
+                    <input type="text" id="Addres" name="Addrers" onkeyup="validAddress()"  class="form-control" />
+
                     <label class="form-label"  for="form11Example4">Address</label>
+                    <span id="address" class="text-danger"></span>
                 </div>
                 <div class="form-outline mb-4">
-                    <input type="numbers" id="form11Example6" name="Pincode" class="form-control" />
+                    <input type="numbers" id="Price" name="Pincode" onkeyup="validPrice()" class="form-control" />
                     <label class="form-label"  for="form11Example6">Pincode</label>
+                    <span id="priceee" class="text-danger"></span>
                 </div>
 
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                    <input type="email" id="form11Example5" name="Email" class="form-control" />
+                    <input type="email" id="Email" name="Email" onkeyup="validEmail()" class="form-control" />
                     <label class="form-label"  for="form11Example5">Email</label>
+                    <span id="Emaileee" class="text-danger"></span>
                 </div>
 
                 <!-- Number input -->
                 <div class="form-outline mb-4">
-                    <input type="number" id="form11Example6" name="Phone" class="form-control" />
+                    <input type="number" id="phonenumber" name="Phone" onkeyup="validPhonenumber()" class="form-control" />
                     <label class="form-label"  for="form11Example6">Phone</label>
                 </div>
 
                 <!-- Message input -->
 
                 <div class="mb-5 text-center">
-                    <button type="submit" class="btn button-order col-md-10">Add Address</button>
+                    <button type="submit" class="btn button-order col-md-10" onclick="return validation()">Add Address</button>
                 </div>
             </form> <!-- Checkbox -->
         </div>
@@ -130,3 +137,101 @@
         color: white;
     }
 </style>
+ <script>
+    var errorName = document.getElementById('nameerr')
+    var errorAddress= document.getElementById('address')
+    var errorprice = document.getElementById('priceee')
+    var errorDiscription=document.getElementById('discription')
+    var errorStock=document.getElementById('stock')
+    var errorPhonenumber = document.getElementById('phonenumbers')
+    function validateName() {
+        const name = document.getElementById('Name').value;
+        if (name == "") {
+            errorName.innerHTML = 'Enter your Name'
+            return false
+        }
+        if (!name.match(/^[a-zA-Z]*$/)) {
+            errorName.innerHTML = 'Alphanets are only allowed'
+            return false
+        }
+        errorName.innerHTML = null
+        return true
+
+    }
+    function validAddress() {
+        const Address = document.getElementById('Address').value;
+        if (Address == "") {
+            errorAddress .innerHTML = 'Enter your category'
+            return false
+        }
+        if (!Address.match(/^[a-zA-Z]*$/)) {
+            errorAddress .innerHTML = 'Alphanets are only allowed'
+            return false
+        }
+        errorcategory.innerHTML = null
+        return true
+
+    }
+function validDiscription() {
+        const name = document.getElementById('Discription').value;
+        if (name == "") {
+            errorDiscription.innerHTML = 'Enter your Discription'
+            return false
+        }
+        if (!name.match(/^[a-zA-Z]*$/)) {
+            errorDiscriptione.innerHTML = 'Alphanets are only allowed'
+            return false
+        }
+       errorDiscription.innerHTML = null
+        return true
+
+    }
+     function validPrice() {
+        const number = document.getElementById('Price').value
+        if (number == "") {
+            errorprice.innerHTML = "enter your Pincode"
+            return false
+        }
+        if (!number.match(/^\d{10}$/)) {
+            errorprice.innerHTML = 'Pincode should be valid'
+            return false
+        }
+        errorprice.innerHTML = null
+        return true
+    }
+     function validStock() {
+        const number = document.getElementById('Price').value
+        if (number == "") {
+            errorStock.innerHTML = "enter your price"
+            return false
+        }
+        if (!number.match(/^\d{10}$/)) {
+            errorStock.innerHTML = 'Number should be valid'
+            return false
+        }
+        errorStock.innerHTML = null
+        return true
+    }
+     function validPhonenumber() {
+        const Phone = document.getElementById('phonenumber').value
+        if (Phone == "") {
+            errorPhonenumber.innerHTML = "enter a phonenumber"
+            return false
+        }
+        if (Phone.length < 10 && !mob.match(/^\d*$/)) {
+            errorPhonenumber.innerHTML = "Please Enter the valide phone number"
+            return false
+        }
+        errorPassword.innerHTML = null
+        return true
+    }
+
+
+    function validation() {
+        if (!validateName() || !validCategory() || !validDiscription() || !validPrice() || !validStock()) {
+            return false
+        }
+        return true
+    }
+</script>
+                   
