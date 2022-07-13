@@ -466,11 +466,19 @@ router.get('/orders',verifylogin,(req,res)=>{
   
 })
 router.get('/view-order-products/:id',verifylogin,async(req,res)=>{
-  let loged=req.session.user
+  try{
+    let loged=req.session.user
   let products=await productHelpers.getOrderProducts(req.params.id)
   res.render('view-order-products',{user:req.session.user,user:true,loged,products})
+
+  }catch(err){
+    res.render('/error')
+  }
+  
 })
 
+
+ 
 
 
 router.get('/User',verifylogin, (req, res) => {

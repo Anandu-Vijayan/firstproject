@@ -464,7 +464,10 @@ module.exports = {
 
     },
     getOrderProducts: (orderId) => {
+      
+        
         return new Promise(async (resolve, reject) => {
+            try{
             let orderItems = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
                 {
                     $match: { _id: objectId(orderId) }
@@ -497,8 +500,14 @@ module.exports = {
             ]).toArray()
             console.log(orderItems);
             resolve(orderItems)
-
+            
+        }catch(e){
+            reject()
+        }
+    
         })
+   
+
     },
     cancelOrderList: (id) => {
         return new Promise((resolve, reject) => {

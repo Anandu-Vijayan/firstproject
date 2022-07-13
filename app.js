@@ -52,7 +52,7 @@ db.connect((err) => {
   if (err) console.log("Connection Error");
   else console.log("Connected");
 });
-app.use("/", indexRouter);
+app.use("/", indexRouter); 
 app.use("/admin", usersRouter);
 
 // catch 404 and forward to error handler
@@ -71,4 +71,4 @@ app.use(function (err, req, res, next) {
   res.render("error");     
 });
 
-module.exports = app;
+module.exports = app;  
