@@ -172,6 +172,7 @@ router.post('/addp',(req,res)=>{
 
 })
 router.get('/edit-product/:id',async(req,res)=>{
+  try{
   console.log("Connecting...");
   if(req.session.adminlog){
   let catogaerys= await productHelpers.getAllCatogaery()
@@ -180,6 +181,9 @@ router.get('/edit-product/:id',async(req,res)=>{
   }else{
     res.redirect("/admin")
   }
+}catch(e){
+  res.redirect('/error')
+}
 })
 router.post('/edit-product/:id',(req,res)=>{
   if(req.session.adminlog){

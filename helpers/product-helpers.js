@@ -46,12 +46,17 @@ module.exports = {
         })
     },
 
-    getProductDetails: (productId) => {
+     getProductDetails: (productId) => {
         return new Promise((resolve, reject) => {
+            try{
             db.get().collection(collection.PRODUCT_COLLECTION).findOne({ _id: objectId(productId) }).then((product) => {
                 console.log(product);
                 resolve(product)
             })
+        }catch(e){
+            reject()
+
+        }
         })
     },
     updateProduct: (productId, productDetails) => {
