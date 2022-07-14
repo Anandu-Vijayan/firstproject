@@ -121,24 +121,24 @@ router.post('/signup', (req, res) => {
     console.log(response);
     let number=req.body.phone_number
     req.session.userData=req.body
-    req.session.phone=req.body.phone_number
-    console.log(number);
-    res.render('otp')
-    client.verify.services(config.serviceSID).verifications.create({
-      to:`+91${number}`,
-      channel:"sms", 
-    }).then((data)=>{
-      console.log(data);
-      console.log("line 40 data");
+    // req.session.phone=req.body.phone_number
+    // console.log(number);
+    res.render('login')
+  //   client.verify.services(config.serviceSID).verifications.create({
+  //     to:`+91${number}`,
+  //     channel:"sms", 
+  //   }).then((data)=>{
+  //     console.log(data);
+  //     console.log("line 40 data");
 
-      res.redirect('/otp')
-    })
+  //     res.redirect('/otp')
+  //   })
 
    
 
-  }).catch(() => {
-    req.session.loginErr = "Entered user Existing"
-    res.redirect('/signup')
+  // }).catch(() => {
+  //   req.session.loginErr = "Entered user Existing"
+  //   res.redirect('/signup')
 
   
 
@@ -149,32 +149,32 @@ router.post('/signup', (req, res) => {
 
 
 })
-router.post('/otp',(req,res)=>{
-  var otp=req.body.otp
-  var number=req.session.phone
+// router.post('/otp',(req,res)=>{
+//   var otp=req.body.otp
+//   var number=req.session.phone
 
-  client.verify.services(config.serviceSID).verificationChecks.create({
-    to: `+91${number}`,
-    code:otp,
-  }).then((data)=>{
-    console.log(data.status+"otp status???????");
+//   client.verify.services(config.serviceSID).verificationChecks.create({
+//     to: `+91${number}`,
+//     code:otp,
+//   }).then((data)=>{
+//     console.log(data.status+"otp status???????");
 
-    if(data.status=='approved'){
-      userHelpers.doSignup(req.session.userData).then((response)=>{
-        req.session.ok=true;
-        res.redirect('/login')
-      })
-    }
-    else{
-      req.session.Er_otp='invalid otp'
-      res.redirect('/otp')
-    }
-  })
+//     if(data.status=='approved'){
+//       userHelpers.doSignup(req.session.userData).then((response)=>{
+//         req.session.ok=true;
+//         res.redirect('/login')
+//       })
+//     }
+//     else{
+//       req.session.Er_otp='invalid otp'
+//       res.redirect('/otp')
+//     }
+//   })
   // userHelpers.doSignup(req.session.userData).then((response)=>{
   //   req.session.ok=true;
   //   res.redirect('/login')
   // })
-})
+
 
 
 
