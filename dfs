@@ -1,0 +1,281 @@
+[33mcommit f977fffffbdd76f3ba999b3ba0644bc013a128b8[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Wed Jul 13 11:37:52 2022 +0530
+
+    Error page handled in edit product
+
+[33mcommit 2adb52e71fa83795988447b617f8ff32f905124b[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Wed Jul 13 10:47:00 2022 +0530
+
+    Error page fixed
+
+[33mcommit 3c5cbbbdde02a1e063e810c834e48c519c161e41[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Tue Jul 12 10:27:35 2022 +0530
+
+    Validation at Address done
+
+[33mcommit a1f1874c6c4e6330950c20290ab4a863aeeb50f5[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Tue Jul 12 09:18:44 2022 +0530
+
+    Checkout backword error fixed
+
+[33mcommit 6924bed5087c5dcdc62d5af7c970f7ff8b55c023[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Mon Jul 11 10:35:36 2022 +0530
+
+    user side add address and chenge password option
+
+[33mcommit ad6b0de0f1e0d70c614eb30edc8635487cc0c0ba[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sun Jul 10 14:33:31 2022 +0530
+
+    order product view setup done
+
+[33mcommit 97d87efe387f146262bf8bb2b75c41037f07ae35[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sun Jul 10 14:23:06 2022 +0530
+
+    Sorting issue fixed
+
+[33mcommit 8f6445c86fd47cb1cfc30ee6249e94a2c718e6c3[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sun Jul 10 14:03:06 2022 +0530
+
+    address delete option is done
+
+[33mcommit c05c938af18c8862708c9f24a1c392702aec866b[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jul 9 15:53:54 2022 +0530
+
+    with cart product coupon desabiled
+
+[33mcommit 741e4810ae10798998693802f4ee93ab5a870b64[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jul 9 15:34:43 2022 +0530
+
+    Zero cart error handled
+
+[33mcommit 3ca2006cc3a26d1acd9de8ffa4f33d1fa942437a[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jul 9 12:30:46 2022 +0530
+
+    Error page and address and payment all are done
+
+[33mcommit 950a522d036b14211c26474db26b2afb0523bec6[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jul 9 11:19:28 2022 +0530
+
+    Ordering address function done
+
+[33mcommit 7a2adf3a2067d0f9964ad074e316b8f197aa0a54[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Fri Jul 8 18:33:57 2022 +0530
+
+    Address selection function doing
+
+[33mcommit ce2b4e6746d77daca2a1ea86aa55586d757bbc29[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Wed Jul 6 16:10:51 2022 +0530
+
+    Pdf and Excel setup done
+
+[33mcommit 0993487d20ee3fb9ee5314719fff53123d3a7453[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Wed Jul 6 14:12:58 2022 +0530
+
+    Sales Report done with out excel and PDF
+
+[33mcommit e74eb83836dd3bf6c0304b46f5dcb4753fef7e27[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Tue Jul 5 18:24:35 2022 +0530
+
+    Orderlist verification done
+
+[33mcommit 34e2fe923f5bfaf5192c90ac3366055235d0a50b[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Tue Jul 5 09:36:47 2022 +0530
+
+    WishList Button added
+
+[33mcommit 239fb6e98475f1ee1b86e9a38d67d9f9c2fb480b[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Mon Jul 4 19:10:06 2022 +0530
+
+    Touch up done
+
+[33mcommit 64771e052e1a39d60f1b0dec64c9e0853edabd5d[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Mon Jul 4 18:28:02 2022 +0530
+
+    Bar diagram setup done
+
+[33mcommit b3fdc9988d66064485b47dd28877d397dbe789e9[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Mon Jul 4 15:13:41 2022 +0530
+
+    Admin page payment report added with out graph
+
+[33mcommit 59535f73226b7e207495b77c5258e0162a2fbee0[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jul 2 20:18:10 2022 +0530
+
+    full coupon setup done
+
+[33mcommit 4c49b9dc62ada7b2ed334bdef0d0bab351c7b11b[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jul 2 18:13:43 2022 +0530
+
+    Coupon Amount is fixed
+
+[33mcommit ab8a6c597dfb3f6874da316521c3532b3e07dc72[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jul 2 11:56:42 2022 +0530
+
+    coupon completed wit out delete button
+
+[33mcommit 37da6fbae08a67906e8c1913e3710c4fa46da621[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jul 2 11:44:14 2022 +0530
+
+    coupon fix
+
+[33mcommit d31c5bee12e03c6072c1dc0c8fcedd733d1c3b95[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jul 2 02:03:05 2022 +0530
+
+    Coupon code almost done
+
+[33mcommit 5e0b25033d99a8d92d8c59cc2813fe55a8eb4c14[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jul 2 00:50:00 2022 +0530
+
+    Coupon code ajax work done
+
+[33mcommit 33fcf0f7091cdfdc00359f889c23e72b82818d24[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jun 25 21:20:03 2022 +0530
+
+    Header color Change
+
+[33mcommit 20ce09e6a8820125d9b327e48e0d36dff33bad8e[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jun 25 20:37:58 2022 +0530
+
+    Profile setup done
+
+[33mcommit 09a8f0f5da9275b95729bb036c37ef02e7e507e9[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jun 25 19:00:38 2022 +0530
+
+    PayPal status converted to pending to placed
+
+[33mcommit 462c75055f00b40f71021981a83f4fd9fdb37f30[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jun 25 18:11:46 2022 +0530
+
+    Order Sort setup done
+
+[33mcommit f0abc209e5dddbf162c480f8fdbcbe11eec1a301[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jun 25 11:57:45 2022 +0530
+
+    Coupon deleting added
+
+[33mcommit 454647cc8e1d1256b24f7cb308b741cee50877e2[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Fri Jun 24 22:44:23 2022 +0530
+
+    admin side coupen creation and seein done actions are pending
+
+[33mcommit 170b84273c89d71554d93dad74d780d6421836fa[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Fri Jun 24 19:54:05 2022 +0530
+
+    coupon code enterd to db
+
+[33mcommit 0e79f37c3bcf65748b016f845786cccde2c3d508[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Thu Jun 23 17:15:29 2022 +0530
+
+    change passworde setup done
+
+[33mcommit af0eb4157281e04c970dc50d90e3ecfa60200b89[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Wed Jun 22 23:42:53 2022 +0530
+
+    Cod razorpay and Paypal full setup done
+
+[33mcommit 0534fc1da454a81226d9c8e7a04731b5346f1354[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Wed Jun 22 23:09:21 2022 +0530
+
+    Paypal set up done
+
+[33mcommit 43ee0c40ae3d9d292dab59927291d566c6bbf16a[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Wed Jun 22 21:31:53 2022 +0530
+
+    Paypal set up done and with out price mangement
+
+[33mcommit 4bc5849c11552dd0d17e0162e9a0431c2715cb90[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Mon Jun 20 21:12:43 2022 +0530
+
+    Wishlist and add to cart setup done
+
+[33mcommit 51af02495f55bf55b6ae886c2adc936c0da9e864[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Mon Jun 20 14:50:46 2022 +0530
+
+    status and Payment commpleted
+
+[33mcommit 0cc9b2c3e4aea33c845acf4689ebd49728943fa6[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Mon Jun 20 12:27:42 2022 +0530
+
+    index add to cart setup done
+
+[33mcommit 82ce2550e8fa4814a3f059f6aa94aa59680e4be4[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Mon Jun 20 10:02:26 2022 +0530
+
+    Cod and online payment fixed
+
+[33mcommit 41c948dba74c3f859976a5c6d88e0643e5fd7705[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sun Jun 19 21:10:28 2022 +0530
+
+    Razorpay setup done
+
+[33mcommit 1b544a6f97450993e31d52c3a668fbe32ed8b64d[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sun Jun 19 20:54:03 2022 +0530
+
+    order mangement Admin side and user side done
+
+[33mcommit d04fd1718f5fb4084a63459ae38786fb6c6b1b96[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jun 18 23:53:37 2022 +0530
+
+    Razorpay completed without sucess page
+
+[33mcommit ab4b7be69c5a9ec792cfe6b8c2fd930630d7e200[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Sat Jun 18 12:50:16 2022 +0530
+
+    WishList completed
+
+[33mcommit 78ec83fc2b3888d915ac43a27427be677431e1e3[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Fri Jun 17 14:25:40 2022 +0530
+
+    Wishlist added without remove option
+
+[33mcommit 5067134f2252dce9404eed942ff63699429c9f25[m
+Author: anandu <ananduvijayan8@gmail.com>
+Date:   Thu Jun 16 11:57:42 2022 +0530
+
+    User side orderCa
