@@ -80,7 +80,7 @@
 
 		<form id="coupon-check">
 			<div class="form-group " style="margin-left:667px" ,"mt-2"> <label>Have coupon?</label>
-				<p class="text danger" id="couponerr"></p>
+				<p class="text-danger" id="couponerr"></p>
 				<div class="input-group"> <input type="text" class="form-control coupon" name="name"
 						placeholder="Coupon code"> <span class="input-group-append"> <button type="submit"
 							class="btn btn-primary btn-apply coupon">Apply</span> </div>
@@ -174,7 +174,7 @@
 			},
 			success: (response) => {
 				if (response.removeProduct) {
-					alert("Product Removed from cart")
+					
 					location.reload()
 				} else {
 					document.getElementById(productId).innerHTML = quantity + count
