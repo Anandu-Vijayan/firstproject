@@ -13,7 +13,12 @@ const { validateExpressRequest } = require('twilio/lib/webhooks/webhooks');
 const { redirect } = require('express/lib/response');
 const { payment } = require('paypal-rest-sdk');
 const { checkCartcoupon, getUserOrders } = require('../helpers/product-helpers');
-const client = require("twilio")(config.accountSID, config.authToken);
+require('dotenv').config()
+const SSID=process.env.serviceId
+const ASID=process.env.accountSID
+const AUID=process.env.authToken
+
+const client = require("twilio")(ASID,AUID);
 
 const verifylogin = (req, res, next) => {
   if (req.session.user) {
@@ -124,7 +129,7 @@ router.post('/signup', (req, res) => {
     req.session.phone=req.body.phone_number
     console.log(number);
     res.render('otp')
-    client.verify.services(config.serviceSID).verifications.create({
+    client.verify.services(SSID).verifications.create({
       to:`+91${number}`,
       channel:"sms", 
     }).then((data)=>{
@@ -153,7 +158,7 @@ router.post('/otp',(req,res)=>{
   var otp=req.body.otp
   var number=req.session.phone
 
-  client.verify.services(config.serviceSID).verificationChecks.create({
+  client.verify.services(SSID).verificationChecks.create({
     to: `+91${number}`,
     code:otp,
   }).then((data)=>{
