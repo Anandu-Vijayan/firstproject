@@ -48,7 +48,7 @@ app.engine(
 app.use(session({ secret: "Key", cookie: { maxAge: 6000000 } }));
 app.use(fileUpload());
 
-db.connect((err) => {
+db.connect((err) => {                                 
   if (err) console.log("Connection Error");
   else console.log("Connected");
 });
