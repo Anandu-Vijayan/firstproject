@@ -30,7 +30,7 @@ module.exports = {
 
         })
     }, getAllProducts: () => {
-        console.log("dfsfd");
+        
         return new Promise(async (resolve, reject) => {
             let product = await db.get().collection(collection.PRODUCT_COLLECTION).find().toArray()
             resolve(product)
