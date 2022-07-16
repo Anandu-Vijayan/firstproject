@@ -6,6 +6,7 @@ const state={
 
 module.exports.connect=function(done){
     const url='mongodb+srv://magicalspirits:13795891303@cluster0.mbaku.mongodb.net/?retryWrites=true&w=majority'
+    
     const dbname='liquor'
 
 
