@@ -109,7 +109,7 @@ router.get('/signup', (req, res) => {
 
 });
 router.get('/otp',(req,res)=>{
-  if(req.session.user=true){
+  if(req.session.user){
     res.redirect('/login')
   }else{
     var num=req.session.phone
@@ -514,7 +514,7 @@ router.get('/wishlist',verifylogin,async(req, res) => {
   console.log("sdasdfuksgdusdfgufdguidfiffsdf55555555555555555555555555555555555555");
   let product=await productHelpers.getWishList(req.session.user._id)
   console.log(product);
-  res.render('whishlist', { user: true, loged,product})
+  res.render('whishList', { user: true, loged,product})
 })
 router.get('/add-to-wishlist/:id',verifylogin,(req,res)=>{
   productHelpers.addToWhishlist(req.params.id,req.session.user._id).then(()=>{
